@@ -1,9 +1,0 @@
-D:\MyWindowsService1\MyWindowsService1\bin\Debug\MyWindowsService1.exe.config
-D:\MyWindowsService1\MyWindowsService1\bin\Debug\MyWindowsService1.exe
-D:\MyWindowsService1\MyWindowsService1\bin\Debug\MyWindowsService1.pdb
-D:\MyWindowsService1\MyWindowsService1\obj\Debug\MyWindowsService1.csprojResolveAssemblyReference.cache
-D:\MyWindowsService1\MyWindowsService1\obj\Debug\MyWindowsService1.ProjectInstaller.resources
-D:\MyWindowsService1\MyWindowsService1\obj\Debug\MyWindowsService1.csproj.GenerateResource.Cache
-D:\MyWindowsService1\MyWindowsService1\obj\Debug\MyWindowsService1.csproj.CoreCompileInputs.cache
-D:\MyWindowsService1\MyWindowsService1\obj\Debug\MyWindowsService1.exe
-D:\MyWindowsService1\MyWindowsService1\obj\Debug\MyWindowsService1.pdb
