@@ -1,0 +1,2 @@
+C:\Windows\Microsoft.NET\Framework\v4.0.30319
+InstallUtil.exe D:\MyWindowsService1\MyWindowsService1\bin\Debug\MyWindowsService1.exe
