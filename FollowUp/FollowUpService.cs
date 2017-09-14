@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FollowUp.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -33,12 +34,21 @@ namespace FollowUp
             timer.Interval = 60000; // 60 seconds  
             timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
             timer.Start();
+
         }
 
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
-            // TODO: Insert monitoring activities here.  
-            eventLog1.WriteEntry("Monitoring the System");
+
+            List<FollowUpThread> list = Filter.FollowThreads(AllThreads.GetList());
+            list = Filter.RemoveEscalateThread(list);
+            CRUD.ClearFollowData();
+            var save = CRUD.SaveFollowData(list);
+            var mail = Email.SendMailAsync(list);
+            mail.Wait();
+            save.Wait();
+
+
         }
         protected override void OnStop()
         {

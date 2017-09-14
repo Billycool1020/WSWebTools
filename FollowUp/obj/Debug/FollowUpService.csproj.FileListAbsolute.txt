@@ -8,3 +8,10 @@ C:\Users\v-haowli\Documents\Visual Studio 2017\Projects\FollowUp\FollowUp\obj\De
 C:\Users\v-haowli\Documents\Visual Studio 2017\Projects\FollowUp\FollowUp\obj\Debug\FollowUpService.csproj.CoreCompileInputs.cache
 C:\Users\v-haowli\Documents\Visual Studio 2017\Projects\FollowUp\FollowUp\obj\Debug\FollowUp.exe
 C:\Users\v-haowli\Documents\Visual Studio 2017\Projects\FollowUp\FollowUp\obj\Debug\FollowUp.pdb
+C:\Users\v-haowli\Documents\Visual Studio 2017\Projects\WSWebTools\WSWebTools\FollowUp\obj\Debug\FollowUpService.csprojResolveAssemblyReference.cache
+C:\Users\v-haowli\Documents\Visual Studio 2017\Projects\WSWebTools\WSWebTools\FollowUp\obj\Debug\FollowUp.FollowUpService.resources
+C:\Users\v-haowli\Documents\Visual Studio 2017\Projects\WSWebTools\WSWebTools\FollowUp\obj\Debug\FollowUp.ProjectInstaller.resources
+C:\Users\v-haowli\Documents\Visual Studio 2017\Projects\WSWebTools\WSWebTools\FollowUp\obj\Debug\FollowUpService.csproj.GenerateResource.Cache
+C:\Users\v-haowli\Documents\Visual Studio 2017\Projects\WSWebTools\WSWebTools\FollowUp\obj\Debug\FollowUpService.csproj.CoreCompileInputs.cache
+C:\Users\v-haowli\Documents\Visual Studio 2017\Projects\WSWebTools\WSWebTools\FollowUp\obj\Debug\FollowUp.exe
+C:\Users\v-haowli\Documents\Visual Studio 2017\Projects\WSWebTools\WSWebTools\FollowUp\obj\Debug\FollowUp.pdb
