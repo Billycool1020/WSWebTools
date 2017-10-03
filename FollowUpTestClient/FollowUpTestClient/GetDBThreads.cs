@@ -6,13 +6,160 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FollowUpTestClient
 {
+    class Failedlist
+    {
+       public DataRow r { get; set; }
+       public int Forumid { get; set; }
+    }
     class GetDBThreads
     {
-        public static  List<FollowUpThread> GetDBList()
+        static List<FollowUpThread> list = new List<FollowUpThread>();
+        static List<Failedlist> Faillist = new List<Failedlist>();
+        static double seconds;
+        public static List<FollowUpThread> GetSHPList()
+        {
+            var today = DateTime.Today;
+            var month = new DateTime(today.Year, today.Month, 1);
+            var first = month.AddMonths(-1);
+            seconds = ConvertToUnixTimestamp(first);
+            FollowContext db = new FollowContext();
+            var forums = db.Forums.ToList();
+
+            //var forums = db.Forums.Where(x=>x.ProductId==54).ToList();
+            //var forums = db.Forums.Where(x => x.Id == "805bdc3f-bf13-4784-9e81-548b5030302b").ToList();
+
+
+            Parallel.ForEach(forums, forum => GetData(forum));
+            Parallel.ForEach(Faillist, f => Check(f.r, f.Forumid));
+            return list;
+        }
+
+        public static void GetData(Forum forum)
+        {
+            string command = "select distinct PostMessageId, CreatedTime,OwnerId, Title, URL from [dbo].[ForumMessages] M join dbo.ForumMessageTags T on M.Id = T.ForumMessageId  where [CreatedTime]>=@Start_Date and IsAnswered=0 and Tag=@tag";
+
+            DataTable dt = new DataTable();
+            string constr = ConfigurationManager.ConnectionStrings["SHP"].ConnectionString;
+
+
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                using (SqlCommand cmd = new SqlCommand(command))
+                {
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Parameters.AddWithValue("@Start_Date", seconds);
+                        cmd.Parameters.AddWithValue("@tag", forum.Id);
+                        //cmd.Parameters.AddWithValue("@tag", "02db4821-3b55-4f15-8844-8cedc8e51558");
+
+                        cmd.Connection = con;
+                        sda.SelectCommand = cmd;
+                        sda.Fill(dt);
+                    }
+                }
+            }
+            //foreach (DataRow r in dt.Rows)
+            //{
+            //    Check(r, forum.ProductId);
+            //}
+
+            Parallel.ForEach(dt.AsEnumerable(), r => Check(r, forum.ProductId));
+            
+
+        }
+
+        public static void Check(DataRow r, int Forumid)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["SHP"].ConnectionString;
+            var PostID = r["PostMessageId"].ToString();
+            string command2 = "select OwnerId,IsAnswered, CreatedTime,url,title from [dbo].[ForumMessages] M  where [CreatedTime]>=@Start_Date and PostMessageId=@PostId order by createdTime";
+            bool IsAnswered = false;
+            DataTable dt2 = new DataTable();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    using (SqlCommand cmd = new SqlCommand(command2))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.CommandType = CommandType.Text;
+                            cmd.Parameters.AddWithValue("@Start_Date", seconds);
+                            cmd.Parameters.AddWithValue("@PostId", PostID);
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            sda.Fill(dt2);
+                            con.Close();
+                            con.Dispose();
+                        }
+                    }
+                }
+
+                foreach(DataRow dr in dt2.Rows)
+                {
+                    if (Convert.ToBoolean(dr["IsAnswered"]))
+                    {
+                        IsAnswered = true;
+                    }
+                        
+                }
+                if (!IsAnswered)
+                {
+                    DataRow lastRow = dt2.Rows[dt2.Rows.Count - 1];
+                    if (lastRow["OwnerId"].ToString() == r["OwnerId"].ToString())
+                    {
+                        var c = lastRow["OwnerId"].ToString();
+                        var d = r["OwnerId"].ToString();
+                        var a = r;
+                        var b = dt2;
+                        FollowUpThread thread = new FollowUpThread();
+
+                        thread.ThreadId = PostID;
+                        thread.cat_URL = r["URL"].ToString();
+                        thread.LastOP = ConvertFromUnixTimestamp(Convert.ToDouble(lastRow["CreatedTime"].ToString()));
+                        thread.ThreadName = r["Title"].ToString();
+                        thread.ProductId = Forumid;
+                        list.Add(thread);
+                    }
+                }
+                
+            }
+            catch
+            {
+                Failedlist failedlist = new Failedlist();
+                failedlist.r = r;
+                failedlist.Forumid = Forumid;
+                Faillist.Add(failedlist);
+            }
+           
+
+           
+        }
+
+
+        public static List<FollowUpThread> GetOwner(List<FollowUpThread> list)
+        {
+            List<FollowUpThread> Cosmos = GetCosmosDBList();
+            foreach (var f in list)
+            {
+                var t = Cosmos.Where(x => x.ThreadId == f.ThreadId).FirstOrDefault();
+                if (t != null)
+                {
+                    f.cat_msalias = t.cat_msalias;
+                }
+            }
+            return list;
+        }
+
+
+
+        public static List<FollowUpThread> GetCosmosDBList()
         {
             string command =
                 "select distinct ForumId,ThreadId,ThreadName,CreatedDateTime,CreatedByCustomerid,HasAnswer,HasReply,tl.cat_msalias,tl.cat_ismanagedthread,tl.cat_EntitlementStatus,tl.cat_URL" +
@@ -62,9 +209,9 @@ namespace FollowUpTestClient
                         cmd.Parameters.AddWithValue("@End_Date", DateTime.Now.ToShortDateString());
                         cmd.Connection = con;
                         sda.SelectCommand = cmd;
-                        sda.Fill(dt);                        
+                        sda.Fill(dt);
                     }
-                }           
+                }
             }
             FollowUpThread followUpThreads;
             foreach (DataRow row in dt.Rows)
@@ -83,5 +230,18 @@ namespace FollowUpTestClient
             }
             return list;
         }
+
+        public static double ConvertToUnixTimestamp(DateTime date)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            TimeSpan diff = date.ToUniversalTime() - origin;
+            return Math.Floor(diff.TotalSeconds);
+        }
+
+        public static DateTime ConvertFromUnixTimestamp(double timestamp)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            return origin.AddSeconds(timestamp);
+        }        
     }
 }

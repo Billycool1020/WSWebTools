@@ -44,7 +44,7 @@ namespace FollowUpTestClient
                         FollowUpThread thread = new FollowUpThread();
                         thread.cat_URL = item.Attributes["href"].Value;
                         thread.LastOP = pt.Caltime(time);
-                        thread.Product = Name;
+                       // thread.Product = Name;
                         thread.ThreadId = item.Attributes["data-threadId"].Value;
                         thread.ThreadName = item.InnerText;
                         list.Add(thread);

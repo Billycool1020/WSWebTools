@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 namespace FollowUpTestClient.Model
 {
     public class Engineer
-    {
-        
-        public int Id { get; set; }
-
+    { 
+        [Key]
         [Required]
         [StringLength(50)]
         public string MSAlias { get; set; }
@@ -21,6 +19,10 @@ namespace FollowUpTestClient.Model
         public string Chinese { get; set; }
 
         public DateTime OnBoardDate { get; set; }
+        public DateTime? GoLiveDate { get; set; }
+        public string ReadinessPool { get; set; }
+        public int EID { get; set; }
+
 
         [Required]
         [StringLength(50)]
@@ -30,7 +32,7 @@ namespace FollowUpTestClient.Model
         [StringLength(50)]
         public string PhoneNumber { get; set; }
 
-        public string ForumEmail { get; set; }
+        public string Project { get; set; }
 
         [StringLength(50)]
         public string WSAlias { get; set; }

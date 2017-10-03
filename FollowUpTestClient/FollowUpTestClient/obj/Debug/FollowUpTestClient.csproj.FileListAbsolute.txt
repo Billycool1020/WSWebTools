@@ -25,3 +25,30 @@ C:\Users\v-haowli\documents\visual studio 2017\Projects\FollowUpTestClient\Follo
 C:\Users\v-haowli\documents\visual studio 2017\Projects\FollowUpTestClient\FollowUpTestClient\obj\Debug\FollowUpTestClient.exe
 C:\Users\v-haowli\documents\visual studio 2017\Projects\FollowUpTestClient\FollowUpTestClient\obj\Debug\FollowUpTestClient.pdb
 C:\Users\v-haowli\documents\visual studio 2017\Projects\FollowUpTestClient\FollowUpTestClient\obj\Debug\FollowUpTestClient.csprojResolveAssemblyReference.cache
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\FollowUpTestClient.exe.config
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\FollowUpTestClient.exe
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\FollowUpTestClient.pdb
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\Common.Logging.Core.dll
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\Common.Logging.dll
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\EntityFramework.dll
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\HtmlAgilityPack.dll
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\Quartz.dll
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\System.Configuration.ConfigurationManager.dll
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\Topshelf.dll
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\Common.Logging.pdb
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\Common.Logging.xml
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\Common.Logging.Core.pdb
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\Common.Logging.Core.xml
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\EntityFramework.xml
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\HtmlAgilityPack.xml
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\Quartz.pdb
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\bin\Debug\Quartz.xml
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\obj\Debug\FollowUpTestClient.csprojResolveAssemblyReference.cache
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\obj\Debug\FollowUpTestClient.Migrations.initial.resources
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\obj\Debug\FollowUpTestClient.csproj.GenerateResource.Cache
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\obj\Debug\FollowUpTestClient.csproj.CoreCompileInputs.cache
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\obj\Debug\FollowUpTestClient.exe
+C:\Users\v-haowli\source\repos\FollowUpTestClient\FollowUpTestClient\obj\Debug\FollowUpTestClient.pdb

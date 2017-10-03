@@ -17,7 +17,10 @@ namespace FollowUpTestClient
             Console.WriteLine("do main task at: " + DateTime.Now);
             try
             {
-                List<FollowUpThread> list = Filter.FollowThreads(AllThreads.GetList());
+
+                List<FollowUpThread> list =GetDBThreads.GetSHPList();
+                list = GetDBThreads.GetOwner(list);
+
                 list = Filter.RemoveEscalateThread(list);
                 CRUD.ClearFollowData();
                 list = list.GroupBy(x => x.ThreadId).Select(y => y.First()).ToList();

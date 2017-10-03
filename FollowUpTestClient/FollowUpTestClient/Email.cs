@@ -12,62 +12,117 @@ namespace FollowUpTestClient
     {
         public static async Task SendMailAsync(List<FollowUpThread> list)
         {
-            try
-            {
-                List<string> ownerList = list.Select(p => p.cat_msalias).Distinct().ToList();// thread owner list             
-                if (ownerList[0] != null)
+            FollowContext db = new FollowContext();
+            var ProductList = list.GroupBy(x => x.ProductId).ToList();
+            foreach (var p in ProductList)
+            {               
+                var Product = db.Products.Where(x => x.Id == p.Key).FirstOrDefault();
+                var ProductOwner = Product.Engineer;
+                string bodyMessage = "Hi " + ProductOwner.DisplayName + ",<br /><br />";
+                bodyMessage += "No answer and no follow threads for " + Product.ProductName + ":<br /><br />";
+                if (p.Where(x => x.LastOP > DateTime.Now.ToUniversalTime().AddDays(-2)).Count() > 0)
                 {
-                    foreach (var owner in ownerList)
+                    bodyMessage += "Last Post in 48 hours:<br /><table border='1' style='border-collapse: collapse;'><tr><td width='800'>Thread</td><td width='200' >Owner</td></tr>";
+                    foreach (var Tlist in p.Where(x => x.LastOP > DateTime.Now.ToUniversalTime().AddDays(-2)))
                     {
-                        if (owner != "")
+                        bodyMessage += "<tr><td style='word-wrap: break-word'><a href=" + Tlist.cat_URL + ">" + Tlist.ThreadName + "</a></td>";
+                        if (Tlist.cat_msalias != null)
                         {
-                            var ownerThreadList = list.Where(p => p.cat_msalias == owner).GroupBy(p => (p.LastOP.Month)).OrderByDescending(p => (p.Key)).ToList();
-
-                            string bodyMessage = "Hi " + owner + ",<br /><br />";
-                            bodyMessage += "No answer and no follow threads: <br /><br />";
-                            bodyMessage += "This month:<br />";
-                            foreach (var Tlist in ownerThreadList[0])
-                            {
-                                bodyMessage += "<a href=" + Tlist.cat_URL + ">" + Tlist.ThreadName + "<br /></a>";
-                            }
-                            bodyMessage += "<br />Last month:<br />";
-                            foreach (var Tlist in ownerThreadList[1])
-                            {
-                                bodyMessage += "<a href=" + Tlist.cat_URL + ">" + Tlist.ThreadName + "<br /></a>";
-                            }
-
-                            bodyMessage += "<br><br>Have A Good Day<br><br>";
-
-                            await Send(owner, bodyMessage);
+                            bodyMessage +="<td>"+Tlist.cat_msalias+ "</td></tr>";
                         }
-                    }
-                }
-                else
-                {
-                    FollowContext db = new FollowContext();
-                    var ProductList = list.GroupBy(x=>x.Product).ToList();
-                    foreach(var p in ProductList)
-                    {
-                        var ProductOwner = db.Products.Where(x => x.ProductName == p.Key).FirstOrDefault().Engineer;
-                        string bodyMessage = "Hi " + ProductOwner.DisplayName + ",<br /><br />";
-                        bodyMessage += "No answer and no follow threads for "+ p.Key+":<br /><br />";
-                        foreach (var Tlist in p )
+                        else
                         {
-                            bodyMessage += "<a href=" + Tlist.cat_URL + ">" + Tlist.ThreadName + "<br /></a>";
-                        }
-                        bodyMessage += "<br><br>Have A Good Day<br><br>";
-
-                        await Send(ProductOwner.MSAlias, bodyMessage);
+                            bodyMessage += "<td></td></tr>";
+                        }                        
                     }
+                    bodyMessage += "</table>";
 
                 }
+                if (p.Where(x => x.LastOP < DateTime.Now.ToUniversalTime().AddDays(-2)).Count() > 0)
+                {
+                    bodyMessage += "Other:<br /><table border='1' style='border-collapse: collapse;'><tr><td width='800'>Thread</td><td width='200'>Owner</td></tr>";
+                    foreach (var Tlist in p.Where(x => x.LastOP < DateTime.Now.ToUniversalTime().AddDays(-2)))
+                    {
+                        bodyMessage += "<tr><td style='word - wrap: break-word'><a href=" + Tlist.cat_URL + ">" + Tlist.ThreadName + "</a></td>";
+                        if (Tlist.cat_msalias != null)
+                        {
+                            bodyMessage += "<td>" + Tlist.cat_msalias + "</td></tr>";
+                        }
+                        else
+                        {
+                            bodyMessage += "<td></td></tr>";
+                        }
+                    }
+                    bodyMessage += "</table>";
+                }
 
-            }
-            catch
-            {
+                    
+                bodyMessage += "<br><br>Have A Good Day<br><br>";
 
+                await Send(ProductOwner.MSAlias, bodyMessage);
             }
+
+
         }
+
+        //public static async Task SendMailAsync(List<FollowUpThread> list)
+        //{
+            //try
+            //{
+            //    List<string> ownerList = list.Select(p => p.cat_msalias).Distinct().ToList();// thread owner list             
+            //    if (ownerList[0] != null)
+            //    {
+            //        foreach (var owner in ownerList)
+            //        {
+            //            if (owner != "")
+            //            {
+            //                var ownerThreadList = list.Where(p => p.cat_msalias == owner).GroupBy(p => (p.LastOP.Month)).OrderByDescending(p => (p.Key)).ToList();
+
+            //                string bodyMessage = "Hi " + owner + ",<br /><br />";
+            //                bodyMessage += "No answer and no follow threads: <br /><br />";
+            //                bodyMessage += "This month:<br />";
+            //                foreach (var Tlist in ownerThreadList[0])
+            //                {
+            //                    bodyMessage += "<a href=" + Tlist.cat_URL + ">" + Tlist.ThreadName + "<br /></a>";
+            //                }
+            //                bodyMessage += "<br />Last month:<br />";
+            //                foreach (var Tlist in ownerThreadList[1])
+            //                {
+            //                    bodyMessage += "<a href=" + Tlist.cat_URL + ">" + Tlist.ThreadName + "<br /></a>";
+            //                }
+
+            //                bodyMessage += "<br><br>Have A Good Day<br><br>";
+
+            //                await Send(owner, bodyMessage);
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        FollowContext db = new FollowContext();
+            //        var ProductList = list.GroupBy(x => x.Product).ToList();
+            //        foreach (var p in ProductList)
+            //        {
+            //            var ProductOwner = db.Products.Where(x => x.ProductName == p.Key).FirstOrDefault().Engineer;
+            //            string bodyMessage = "Hi " + ProductOwner.DisplayName + ",<br /><br />";
+            //            bodyMessage += "No answer and no follow threads for " + p.Key + ":<br /><br />";
+            //            foreach (var Tlist in p)
+            //            {
+            //                bodyMessage += "<a href=" + Tlist.cat_URL + ">" + Tlist.ThreadName + "<br /></a>";
+            //            }
+            //            bodyMessage += "<br><br>Have A Good Day<br><br>";
+
+            //            await Send(ProductOwner.MSAlias, bodyMessage);
+            //        }
+
+            //    }
+
+            //}
+            //catch
+            //{
+
+            //}
+        //}
 
 
         public static async Task SendErrorMailAsync(List<FollowUpThread> list)

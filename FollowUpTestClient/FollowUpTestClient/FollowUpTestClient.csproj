@@ -84,6 +84,7 @@
     <Compile Include="Model\Engineer.cs" />
     <Compile Include="Model\EscalatedThread.cs" />
     <Compile Include="Model\FollowUpThread.cs" />
+    <Compile Include="Model\Forum.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Team.cs" />
     <Compile Include="GetWEBThreads.cs" />

@@ -17,6 +17,37 @@ namespace FollowUpTestClient
         static List<FollowUpThread> noneedFollowList = new List<FollowUpThread>();
         static List<FollowUpThread> errorFollowList = new List<FollowUpThread>();
         
+
+        public static List<FollowUpThread> FliterDeleted(List<FollowUpThread> list)
+        {
+            followList = new List<FollowUpThread>();
+            Parallel.ForEach(list, Thread => CheckDel(Thread));
+    
+           
+            return followList;
+        }
+
+
+        public static void CheckDel(FollowUpThread oldThread)
+        {
+             
+            try
+            {
+                HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(oldThread.cat_URL);
+                // Sends the HttpWebRequest and waits for a response.
+                HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
+                myHttpWebResponse.Close();
+                followList.Add(oldThread);
+
+            }
+            catch
+            {
+                
+            }           
+           
+        }
+
+
         public static List<FollowUpThread> FollowThreads(List<FollowUpThread> threads)
         {
             followList.Clear();

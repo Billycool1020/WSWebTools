@@ -19,16 +19,16 @@ namespace FollowUpTestClient
 
             try
             {
-                list = GetDBThreads.GetDBList();
+                list = GetDBThreads.GetCosmosDBList();
             }
             catch
             {
                 FollowContext db = new FollowContext();
-                var Products = db.Products.Where(x => x.URL != null).ToList();
-                foreach (var p in Products)
-                {
-                    list.AddRange(GetWEBThreads.GetMSDNThreads(p.URL, p.ProductName));
-                }
+              //  var Products = db.Products.Where(x => x.URL != null).ToList();
+                //foreach (var p in Products)
+                //{
+                //    list.AddRange(GetWEBThreads.GetMSDNThreads(p.URL, p.ProductName));
+                //}
             }
 
 

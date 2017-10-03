@@ -10,14 +10,14 @@ namespace FollowUpTestClient.Model
 {
     public class Product
     {
+        [Key]
         public int Id { get; set; }
 
         [ForeignKey("Engineer")]
-        public int OwnerId { get; set; }
+        public string OwnerId { get; set; }
         [Required]
-        [StringLength(50)]
         public string ProductName { get; set; }
-        public string URL { get; set; }
+
         [ForeignKey("Team")]
         public int SubTeamId { get; set; }
 
