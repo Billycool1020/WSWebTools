@@ -19,6 +19,7 @@ namespace WSWebTool.Data
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Forum> Forums { get; set; }
+        public virtual DbSet<ThreadNote> ThreadNotes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -160,6 +160,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UnansweredController.cs" />
+    <Compile Include="Migrations\201710100546039_initial.cs" />
+    <Compile Include="Migrations\201710100546039_initial.Designer.cs">
+      <DependentUpon>201710100546039_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Engineer.cs" />
     <Compile Include="Models\EscalatedThread.cs" />
     <Compile Include="Models\FollowUpThread.cs" />
@@ -230,8 +235,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts - Copy\bootstrap.js" />
-    <Content Include="Scripts - Copy\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -240,17 +243,6 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="Scripts - Copy\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts - Copy\jquery-1.10.2.js" />
-    <Content Include="Scripts - Copy\jquery-1.10.2.min.js" />
-    <None Include="Scripts - Copy\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts - Copy\jquery.validate.js" />
-    <Content Include="Scripts - Copy\jquery.validate.min.js" />
-    <Content Include="Scripts - Copy\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts - Copy\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts - Copy\modernizr-2.6.2.js" />
-    <Content Include="Scripts - Copy\respond.js" />
-    <Content Include="Scripts - Copy\respond.min.js" />
     <Content Include="Scripts\amazeui.ie8polyfill.js" />
     <Content Include="Scripts\amazeui.ie8polyfill.min.js" />
     <Content Include="Scripts\amazeui.js" />
@@ -269,7 +261,7 @@
       <DependentUpon>SHP.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
-    <Content Include="Scripts - Copy\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\bootstrap-notify.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\handlebars.min.js" />
@@ -316,6 +308,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201710100546039_initial.resx">
+      <DependentUpon>201710100546039_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

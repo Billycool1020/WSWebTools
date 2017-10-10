@@ -20,6 +20,7 @@ namespace WSWebTool.Models
 
         [ForeignKey("Team")]
         public int SubTeamId { get; set; }
+        public double OPVAR { get; set; }
 
         public virtual Team Team { get; set; }
         public virtual Engineer Engineer { get; set; }
