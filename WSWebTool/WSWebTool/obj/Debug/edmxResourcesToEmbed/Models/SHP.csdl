@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="shp.message_msdnModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ForumMessageKeyword">
+    <Key>
+      <PropertyRef Name="ForumMessageId" />
+      <PropertyRef Name="Type" />
+      <PropertyRef Name="Keyword" />
+    </Key>
+    <Property Name="ForumMessageId" Type="Int64" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Keyword" Type="String" MaxLength="400" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ForumMessage" Relationship="Self.FK_ForumMessages_Id_ForumMessageKeywords_ForumMessageId" FromRole="ForumMessageKeywords" ToRole="ForumMessages" />
+  </EntityType>
+  <EntityType Name="ForumMessageLexi">
+    <Key>
+      <PropertyRef Name="ForumMessageId" />
+      <PropertyRef Name="SentenceIndex" />
+      <PropertyRef Name="WordIndex" />
+    </Key>
+    <Property Name="ForumMessageId" Type="Int64" Nullable="false" />
+    <Property Name="SentenceIndex" Type="Int32" Nullable="false" />
+    <Property Name="WordIndex" Type="Int32" Nullable="false" />
+    <Property Name="ParentWordIndex" Type="Int32" />
+    <Property Name="POS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Word" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LongWord" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ForumMessage" Relationship="Self.FK_ForumMessages_Id_ForumMessageLexis_ForumMessageId" FromRole="ForumMessageLexis" ToRole="ForumMessages" />
+  </EntityType>
+  <EntityType Name="ForumMessage">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="MessageId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PostMessageId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AnalysisCompleted" Type="Boolean" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="AnalysisProgress" Type="Int64" Nullable="false" />
+    <Property Name="ViewCount" Type="Int32" Nullable="false" />
+    <Property Name="ReplyCount" Type="Int32" Nullable="false" />
+    <Property Name="IsAnswered" Type="Boolean" Nullable="false" />
+    <Property Name="Score" Type="Int32" Nullable="false" />
+    <Property Name="FavoriteCount" Type="Int32" />
+    <Property Name="UpVoteCount" Type="Int32" />
+    <Property Name="DownVoteCount" Type="Int32" />
+    <Property Name="DeleteVoteCount" Type="Int32" />
+    <Property Name="CreatedTime" Type="Int64" Nullable="false" />
+    <Property Name="CreatedTimeOfHourly" Type="Int64" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="CreatedTimeOfDaily" Type="Int64" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="LastUpdatedTime" Type="Int64" Nullable="false" />
+    <Property Name="OwnerId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="URL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="LCID" Type="Int32" Nullable="false" />
+    <Property Name="Country" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Location" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ForumMessageKeywords" Relationship="Self.FK_ForumMessages_Id_ForumMessageKeywords_ForumMessageId" FromRole="ForumMessages" ToRole="ForumMessageKeywords" />
+    <NavigationProperty Name="ForumMessageLexis" Relationship="Self.FK_ForumMessages_Id_ForumMessageLexis_ForumMessageId" FromRole="ForumMessages" ToRole="ForumMessageLexis" />
+    <NavigationProperty Name="ForumMessageTags" Relationship="Self.FK_ForumMessages_Id_ForumMessageTags_ForumMessageId" FromRole="ForumMessages" ToRole="ForumMessageTags" />
+    <NavigationProperty Name="ForumUser" Relationship="Self.FK_ForumUsers_Id_ForumMessages_OwnerId" FromRole="ForumMessages" ToRole="ForumUsers" />
+  </EntityType>
+  <EntityType Name="ForumMessageTag">
+    <Key>
+      <PropertyRef Name="ForumMessageId" />
+      <PropertyRef Name="Tag" />
+    </Key>
+    <Property Name="ForumMessageId" Type="Int64" Nullable="false" />
+    <Property Name="Tag" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ForumMessage" Relationship="Self.FK_ForumMessages_Id_ForumMessageTags_ForumMessageId" FromRole="ForumMessageTags" ToRole="ForumMessages" />
+  </EntityType>
+  <EntityType Name="ForumUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Region" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ProfilePictureUri" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ForumMessages" Relationship="Self.FK_ForumUsers_Id_ForumMessages_OwnerId" FromRole="ForumUsers" ToRole="ForumMessages" />
+  </EntityType>
+  <Association Name="FK_ForumMessages_Id_ForumMessageKeywords_ForumMessageId">
+    <End Role="ForumMessages" Type="Self.ForumMessage" Multiplicity="1" />
+    <End Role="ForumMessageKeywords" Type="Self.ForumMessageKeyword" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ForumMessages">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ForumMessageKeywords">
+        <PropertyRef Name="ForumMessageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ForumMessages_Id_ForumMessageLexis_ForumMessageId">
+    <End Role="ForumMessages" Type="Self.ForumMessage" Multiplicity="1" />
+    <End Role="ForumMessageLexis" Type="Self.ForumMessageLexi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ForumMessages">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ForumMessageLexis">
+        <PropertyRef Name="ForumMessageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ForumMessages_Id_ForumMessageTags_ForumMessageId">
+    <End Role="ForumMessages" Type="Self.ForumMessage" Multiplicity="1" />
+    <End Role="ForumMessageTags" Type="Self.ForumMessageTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ForumMessages">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ForumMessageTags">
+        <PropertyRef Name="ForumMessageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ForumUsers_Id_ForumMessages_OwnerId">
+    <End Role="ForumUsers" Type="Self.ForumUser" Multiplicity="1" />
+    <End Role="ForumMessages" Type="Self.ForumMessage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ForumUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ForumMessages">
+        <PropertyRef Name="OwnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SHPEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ForumMessageKeywords" EntityType="Self.ForumMessageKeyword" />
+    <EntitySet Name="ForumMessageLexis" EntityType="Self.ForumMessageLexi" />
+    <EntitySet Name="ForumMessages" EntityType="Self.ForumMessage" />
+    <EntitySet Name="ForumMessageTags" EntityType="Self.ForumMessageTag" />
+    <EntitySet Name="ForumUsers" EntityType="Self.ForumUser" />
+    <AssociationSet Name="FK_ForumMessages_Id_ForumMessageKeywords_ForumMessageId" Association="Self.FK_ForumMessages_Id_ForumMessageKeywords_ForumMessageId">
+      <End Role="ForumMessages" EntitySet="ForumMessages" />
+      <End Role="ForumMessageKeywords" EntitySet="ForumMessageKeywords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ForumMessages_Id_ForumMessageLexis_ForumMessageId" Association="Self.FK_ForumMessages_Id_ForumMessageLexis_ForumMessageId">
+      <End Role="ForumMessages" EntitySet="ForumMessages" />
+      <End Role="ForumMessageLexis" EntitySet="ForumMessageLexis" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ForumMessages_Id_ForumMessageTags_ForumMessageId" Association="Self.FK_ForumMessages_Id_ForumMessageTags_ForumMessageId">
+      <End Role="ForumMessages" EntitySet="ForumMessages" />
+      <End Role="ForumMessageTags" EntitySet="ForumMessageTags" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ForumUsers_Id_ForumMessages_OwnerId" Association="Self.FK_ForumUsers_Id_ForumMessages_OwnerId">
+      <End Role="ForumUsers" EntitySet="ForumUsers" />
+      <End Role="ForumMessages" EntitySet="ForumMessages" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

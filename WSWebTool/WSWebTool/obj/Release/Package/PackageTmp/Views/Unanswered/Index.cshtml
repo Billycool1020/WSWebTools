@@ -1,0 +1,65 @@
+﻿@model PagedList.IPagedList<WSWebTool.Models.UnansweredThreads>
+@using PagedList.Mvc;
+<script src="~/Scripts/jquery-3.2.1.js"></script>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/amazeui.css" rel="stylesheet" />
+<script src="~/Scripts/amazeui.min.js"></script>
+@{
+    ViewBag.Title = "Index";
+    List<string> productlist = ViewBag.productlist;
+}
+
+<h2>Unanswered</h2>
+
+
+
+@using (Html.BeginForm("Index", "Unanswered", FormMethod.Get))
+{
+    <p>
+        Find by Product:
+        @Html.DropDownList("Product", new SelectList(productlist), "-- Click to Select --")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+
+        <th>
+            Create Date
+        </th>
+        <th>
+            Product
+        </th>
+      
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href=@item.url target="_blank">@item.title</a>
+            </td>
+
+            <td>
+                @item.CreateTime.ToShortDateString()
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product)
+            </td>
+            
+            <td>
+                
+            </td>
+        </tr>
+    }
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, product = ViewBag.product }))
