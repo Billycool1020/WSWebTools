@@ -20,6 +20,8 @@ namespace WSWebTool.Data
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Forum> Forums { get; set; }
         public virtual DbSet<ThreadNote> ThreadNotes { get; set; }
+        public virtual DbSet<ASPIISForum> ASPIISForums { get; set; }
+        public virtual DbSet<ASPIISThread> ASPIISThreads { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

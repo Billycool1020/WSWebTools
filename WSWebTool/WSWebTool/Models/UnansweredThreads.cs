@@ -16,5 +16,7 @@ namespace WSWebTool.Models
         public long Temptime { get; set; }
         public string Note { get; set; }
         public bool IsLastOp { get; set; }
+
+        public string Idle { get; set; }
     }
 }

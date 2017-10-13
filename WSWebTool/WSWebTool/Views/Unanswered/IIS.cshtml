@@ -2,15 +2,15 @@
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "MSDN";
+    ViewBag.Title = "IIS";
     List<string> productlist = ViewBag.productlist;
 }
 
-<h2>MSDN</h2>
+<h2>Unanswered</h2>
 
 
 
-@using (Html.BeginForm("Index", "Unanswered", FormMethod.Get))
+@using (Html.BeginForm("IIS", "Unanswered", FormMethod.Get))
 {
     <p>
         Find by Product:
@@ -20,50 +20,10 @@
 }
 
 
-@*<div class="container">
-    <ul class="nav nav-tabs">
-        @foreach (var product in productlist)
-        {
-            <li><a data-toggle="tab" href="#@product" onclick="changeproduct(this)">@product</a></li>
-        }      
-    </ul>
-
-    <div class="tab-content">
-        @foreach (var product in productlist)
-        {
-          
-        }
-        <div id="home" class="tab-pane fade in active">
-            <h3>HOME</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        </div>
-        <div id="menu1" class="tab-pane fade">
-            <h3>Menu 1</h3>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
-        <div id="menu2" class="tab-pane fade">
-            <h3>Menu 2</h3>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-        </div>
-        <div id="menu3" class="tab-pane fade">
-            <h3>Menu 3</h3>
-            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </div>
-    </div>
-</div>*@
 
 
 
-
-
-
-
-
-
-
-
-
- Today is @DateTime.Now.ToShortDateString() &nbsp; @ViewBag.CProduct  &nbsp;Threads: @ViewBag.Threads   &nbsp;Marked: @ViewBag.Marked  &nbsp; @ViewBag.Need
+@*Today is @DateTime.Now.ToShortDateString() &nbsp; IIS &nbsp; OPVAR Target: 19%    &nbsp;Threads: @ViewBag.Threads   &nbsp;Marked: @ViewBag.Marked  &nbsp; @ViewBag.Need*@
 <table class="table">
     <tr>
         <th width="500px">
@@ -71,15 +31,18 @@
         </th>
 
         <th>
-            Idle Time
+            Create Date
         </th>
         <th>
             Product
         </th>
 
         <th>
+            Note
         </th>
-     
+        <th>
+
+        </th>
         <th>
 
         </th>
@@ -87,21 +50,23 @@
 
     @foreach (var item in Model)
     {
-       
-        
-            <tr>
+        if (item.IsLastOp)
+        {
+            <tr style="background-color:yellow">
                 <td width="500px">
                     <a href=@item.url target="_blank" style="overflow: hidden; text-overflow: ellipsis">@item.title</a>
                 </td>
 
                 <td>
-                    @DateTime.Now - @item.CreateTime
+                    @item.CreateTime.ToShortDateString()
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Product)
                 </td>
 
                 <td>
+                    @Html.TextAreaFor(modelItem => item.Note, new { @class = "form-control", @rows = 3, @cols = 20 })
+                    <input id="Hidden1" type="hidden" value="@item.ThreadId" />
 
                 </td>
                 <td style="text-align:center; vertical-align:middle;">
@@ -109,7 +74,32 @@
                 </td>
                 <td></td>
             </tr>
-        
+        }
+        else
+        {
+            <tr>
+                <td width="500px">
+                    <a href=@item.url target="_blank" style="overflow: hidden; text-overflow: ellipsis">@item.title</a>
+                </td>
+
+                <td>
+                    @item.CreateTime.ToShortDateString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product)
+                </td>
+
+                <td>
+                    @Html.TextAreaFor(modelItem => item.Note, new { @class = "form-control", @rows = 3, @cols = 20 })
+                    <input id="Hidden1" type="hidden" value="@item.ThreadId" />
+
+                </td>
+                <td style="text-align:center; vertical-align:middle;">
+                    <input id="@item.ThreadId" type="button" value="Update" class="form-control" onclick="addNote(this)" />
+                </td>
+                <td></td>
+            </tr>
+        }
     }
 
 </table>
@@ -117,12 +107,13 @@
 
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, product = ViewBag.product }))
+            @Html.PagedListPager(Model, page => Url.Action("IIS", new { page, product = ViewBag.product }))
 
             @section scripts {
                 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
                 <script src="~/Scripts/bootstrap-notify.min.js"></script>
-                <script>                    
+                <script>
+
                     function addNote(x) {
                         $(x).parent().find("textarea").attr("disabled", "disabled");
                         var serviceURL = '/Unanswered/AddNote';
@@ -144,24 +135,7 @@
                         });
                     }
 
-                    function changeproduct(x) {
-                       
-                        var serviceURL = '/Unanswered/Index';
-                        
-                        var Product = $(x).text();
-                        $.ajax({
-                            type: "Post",
-                            url: serviceURL,
-                            data: JSON.stringify({
-                                Product: Product
-                            }),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (response) {
-                              
-                            },
-                        });
-                    }
+
 
                     function note() {
                         $.notify({

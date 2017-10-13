@@ -1,0 +1,117 @@
+﻿@model WSWebTool.Models.UnansweredThreads
+
+@{
+    ViewBag.Title = "Detail";
+}
+
+<h2>Detail</h2>
+<br />
+<div>
+    <div>
+        <table style=" margin: 0 auto; width:100%; height:100% " border="1">
+            <tr>
+                <td>
+                    &nbsp;Title:&nbsp;
+                </td>
+
+                <td colspan="3">&nbsp;<a href="https://forums.asp.net/t/2129613.aspx">How to load 2000+ Records using Ajax Webmethod</a> </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;Product&nbsp;
+                </td>
+                <td>
+                    &nbsp;Asp.Net&nbsp;
+                </td>
+
+                <td>
+                    &nbsp;Idle&nbsp;
+                </td>
+                <td>
+                    &nbsp;10D 5H&nbsp;
+                </td>
+
+
+            </tr>
+            <tr>
+
+                <td>
+                    &nbsp;Forum&nbsp;
+                </td>
+                <td>
+                    &nbsp;ASP.NET AJAX + Ajax Control Toolkit&nbsp;
+                </td>
+
+                <td>
+                    &nbsp;Create Time&nbsp;
+                </td>
+                <td>
+                    &nbsp;Oct 02, 2017 03:59 AM&nbsp;
+                </td>
+
+
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div style="height:550px">
+        <div style="float: left;display:inline;height:100%; width:49% ">
+
+            <div style="height:10%;margin-left:5px;border-bottom:solid">
+                <h4>Add Notes</h4>
+            </div>
+
+            <div style="display:inline; width:75%">
+                <textarea id="Note"></textarea>
+            </div>
+            <div>
+                <input id="Add" type="button" value="Add" class="form-control" style="left:0px" />
+            </div>
+        </div>
+
+
+        <div style="float: left;display:inline; height:100%;width:49%;margin-left:5px">
+            <div style="height:10%;margin-left:5px;border-bottom:solid">
+                <h4>Notes</h4>
+            </div>
+
+            <div style="height:85%; overflow-y:auto;margin-left:5px">
+                [10/12/2017] Billy:<br />
+                Note1<br /><hr />
+                [10/12/2017] Billy:<br />
+                Note2<br /><hr />
+                [10/12/2017] Billy:<br />
+                Note3<br /><hr />
+                [10/12/2017] Billy:<br />
+                Note4<br /><hr />
+                [10/12/2017] Billy:<br />
+                Note5<br /><hr />
+               
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+</div>
+
+<div>
+
+</div>
+@section scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script>
+        new SimpleMDE({
+            element: document.getElementById("Note"),
+           
+            spellChecker: false,
+        });
+    </script>
+
+}

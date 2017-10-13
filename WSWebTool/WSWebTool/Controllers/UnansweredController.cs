@@ -12,6 +12,130 @@ namespace WSWebTool.Controllers
 {
     public class UnansweredController : Controller
     {
+        public ActionResult Detail(UnansweredThreads thread)
+        {
+
+            return View();
+        }
+
+        public ActionResult IIS(string product, int? page)
+        {
+            //UnansweredThreads
+            WSWebContext WSdb = new WSWebContext();
+
+
+            List<string> productlist = WSdb.ASPIISForums.Where(x => x.Product.ProductName == "IIS").Select(x => x.ForumName).ToList();
+            ViewBag.productlist = productlist;
+            ViewBag.product = product;
+
+
+
+            var threads = from t in WSdb.ASPIISThreads
+                          where t.ASPIISForum.Product.ProductName == "IIS"
+                          orderby t.PostDate descending
+                          select new UnansweredThreads
+                          {
+                              ThreadId = t.ThreadId,
+                              title = t.Title,
+                              url = t.Link,
+                              CreateTime = t.PostDate,
+                              Product = t.ASPIISForum.ForumName,
+                              IsLastOp = t.IsLastOp
+                          };
+
+            if (!String.IsNullOrEmpty(product))
+            {
+                threads = threads.Where(x => x.Product == product);
+
+            }
+
+            var list = threads.ToList();
+
+
+
+            foreach (var u in list)
+            //Parallel.ForEach(list, (u) =>
+            {
+                var Note = WSdb.ThreadNotes.Find(u.ThreadId);
+                if (Note != null)
+                {
+                    u.Note = Note.Note;
+                }
+                else
+                {
+                    u.Note = "";
+                }
+            };
+
+            int pageSize = 25;
+            int pageNumber = (page ?? 1);
+            return View(list.ToPagedList(pageNumber, pageSize));
+        }
+        public ActionResult Asp(string product, int? page)
+        {
+            //UnansweredThreads
+            WSWebContext WSdb = new WSWebContext();
+
+
+            List<string> productlist = WSdb.ASPIISForums.Where(x => x.Product.ProductName == "ASP.NET").Select(x => x.ForumName).ToList();
+            ViewBag.productlist = productlist;
+            ViewBag.product = product;
+
+
+
+
+
+            var threads = from t in WSdb.ASPIISThreads
+                          where t.ASPIISForum.Product.ProductName == "ASP.NET"
+                          orderby t.PostDate descending
+                          select new UnansweredThreads
+                          {
+                              ThreadId = t.ThreadId,
+                              title = t.Title,
+                              url = t.Link,
+                              CreateTime = t.PostDate,
+                              Product = t.ASPIISForum.ForumName,
+                              IsLastOp = t.IsLastOp
+                          };
+
+            if (!String.IsNullOrEmpty(product))
+            {
+                threads = threads.Where(x => x.Product == product);
+
+            }
+
+            var list = threads.ToList();
+
+
+
+            //foreach (var u in list)
+            Parallel.ForEach(list, (u) =>
+            {
+                var date = (DateTime.Now - u.CreateTime);
+
+                u.Idle = (date.Days==0?"": date.Days + "d ") + date.Hours + "H";
+                
+                using (WSWebContext WSdb2 = new WSWebContext())
+                {
+                    var Note = WSdb2.ThreadNotes.Find(u.ThreadId);
+                    if (Note != null)
+                    {
+                        u.Note = Note.Note;
+                    }
+                    else
+                    {
+                        u.Note = "";
+                    }
+                }
+               
+            });
+
+            int pageSize = 25;
+            int pageNumber = (page ?? 1);
+            return View(list.ToPagedList(pageNumber, pageSize));
+        }
+
+
         // GET: Unanswered
         public ActionResult Index(string product, int? page)
         {
@@ -28,47 +152,40 @@ namespace WSWebTool.Controllers
             List<string> forumid;
             if (!String.IsNullOrEmpty(product))
             {
-                
+
                 forumid = WSdb.Forums.Where(x => x.Product.ProductName == product).Select(x => x.Id).ToList();
             }
             else
             {
                 ViewBag.Target = "N/A";
-                 forumid = WSdb.Forums.Select(x => x.Id).ToList();
+                forumid = WSdb.Forums.Select(x => x.Id).ToList();
             }
             var forum = WSdb.Forums.ToList();
 
             SHPEntities db = new SHPEntities();
             var Threads = (from M in db.ForumMessages
-                          join t in db.ForumMessageTags
-                          on M.Id equals t.ForumMessageId
-                          where M.CreatedTimeOfDaily >= seconds && forumid.Contains(t.Tag)
-                          select M).Count();
-
-            ViewBag.Threads = Threads;
-            var Marked =  (from M in db.ForumMessages
                            join t in db.ForumMessageTags
                            on M.Id equals t.ForumMessageId
-                           where M.IsAnswered == true && M.CreatedTimeOfDaily >= seconds && forumid.Contains(t.Tag)
-                           select M.PostMessageId).ToList().Select(x=>x.First()).Count();
+                           where M.CreatedTimeOfDaily >= seconds && forumid.Contains(t.Tag)
+                           select M).Count();
+
+            ViewBag.Threads = Threads;
+            var Marked = (from M in db.ForumMessages
+                          join t in db.ForumMessageTags
+                          on M.Id equals t.ForumMessageId
+                          where M.IsAnswered == true && M.CreatedTimeOfDaily >= seconds && forumid.Contains(t.Tag)
+                          select M.PostMessageId).ToList().Select(x => x.First()).Count();
             ViewBag.Marked = Marked;
 
 
             if (!String.IsNullOrEmpty(product))
             {
-               
+
                 var OPVAR = WSdb.Products.Where(x => x.ProductName == product).FirstOrDefault().OPVAR;
-                ViewBag.CProduct = product +  "  OPVAR Target: "+ OPVAR*100+"%";
+                ViewBag.CProduct = product + "  OPVAR Target: " + OPVAR * 100 + "%";
                 ViewBag.Target = OPVAR;
-                ViewBag.Need ="Need:"+ (int)(Threads * OPVAR - Marked+1);
+                ViewBag.Need = "Need:" + (int)(Threads * OPVAR - Marked + 1);
             }
-            
-
-
-
-
-
-
 
 
 
@@ -92,25 +209,28 @@ namespace WSWebTool.Controllers
             foreach (var u in list)
             //Parallel.ForEach(list, (u) =>
             {
-                var Owner = (from M in db.ForumMessages
-                             where M.PostMessageId == u.ThreadId
-                             orderby M.CreatedTime
-                             select M.OwnerId).ToList();
-                u.IsLastOp = (Owner[0] == Owner[Owner.Count - 1]);
+                //using (SHPEntities db2 = new SHPEntities())
+                //{
+                    var Owner = (from M in db.ForumMessages
+                                 where M.PostMessageId == u.ThreadId
+                                 orderby M.CreatedTime
+                                 select M.OwnerId).ToList();
+                    u.IsLastOp = (Owner[0] == Owner[Owner.Count - 1]);
 
+                    u.Product = forum.Where(x => x.Id.ToLower() == u.Forum.ToLower()).FirstOrDefault().Product.ProductName;
+                    u.CreateTime = ConvertFromUnixTimestamp(u.Temptime);
+                    var Note = WSdb.ThreadNotes.Find(u.ThreadId);
+                    if (Note != null)
+                    {
+                        u.Note = Note.Note;
+                    }
+                    else
+                    {
+                        u.Note = "";
+                    }
 
-
-                u.Product = forum.Where(x => x.Id.ToLower() == u.Forum.ToLower()).FirstOrDefault().Product.ProductName;
-                u.CreateTime = ConvertFromUnixTimestamp(u.Temptime);
-                var Note = WSdb.ThreadNotes.Find(u.ThreadId);
-                if (Note != null)
-                {
-                    u.Note = Note.Note;
-                }
-                else
-                {
-                    u.Note = "";
-                }
+               // } 
+                
             };
             list.OrderByDescending(x => x.CreateTime);
             int pageSize = 25;

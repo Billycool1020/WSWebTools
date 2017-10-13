@@ -165,6 +165,8 @@
       <DependentUpon>201710100546039_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ASPIISForum.cs" />
+    <Compile Include="Models\ASPIISThread.cs" />
     <Compile Include="Models\Engineer.cs" />
     <Compile Include="Models\EscalatedThread.cs" />
     <Compile Include="Models\FollowUpThread.cs" />
@@ -299,6 +301,9 @@
     <Content Include="Views\Unanswered\Index.cshtml" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
+    <Content Include="Views\Unanswered\Asp.cshtml" />
+    <Content Include="Views\Unanswered\IIS.cshtml" />
+    <Content Include="Views\Unanswered\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
