@@ -33,7 +33,7 @@
         <th>
             Create Date
         </th>
-        <th>
+        <th width="250px">
             Product
         </th>
 
@@ -50,33 +50,7 @@
 
     @foreach (var item in Model)
     {
-        if (item.IsLastOp)
-        {
-            <tr style="background-color:yellow">
-                <td width="500px">
-                    <a href=@item.url target="_blank" style="overflow: hidden; text-overflow: ellipsis">@item.title</a>
-                </td>
 
-                <td>
-                    @item.CreateTime.ToShortDateString()
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product)
-                </td>
-
-                <td>
-                    @Html.TextAreaFor(modelItem => item.Note, new { @class = "form-control", @rows = 3, @cols = 20 })
-                    <input id="Hidden1" type="hidden" value="@item.ThreadId" />
-
-                </td>
-                <td style="text-align:center; vertical-align:middle;">
-                    <input id="@item.ThreadId" type="button" value="Update" class="form-control" onclick="addNote(this)" />
-                </td>
-                <td></td>
-            </tr>
-        }
-        else
-        {
             <tr>
                 <td width="500px">
                     <a href=@item.url target="_blank" style="overflow: hidden; text-overflow: ellipsis">@item.title</a>
@@ -99,7 +73,7 @@
                 </td>
                 <td></td>
             </tr>
-        }
+        
     }
 
 </table>

@@ -2,7 +2,7 @@
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "ASP.NET";
+    ViewBag.Title = "Asp.Net";
     List<string> productlist = ViewBag.productlist;
 }
 
@@ -23,25 +23,22 @@
 
 
 
-@*Today is @DateTime.Now.ToShortDateString() &nbsp; @ViewBag.CProduct  &nbsp;Threads: @ViewBag.Threads   &nbsp;Marked: @ViewBag.Marked  &nbsp; @ViewBag.Need*@
+@*Today is @DateTime.Now.ToShortDateString() &nbsp; IIS &nbsp; OPVAR Target: 19%    &nbsp;Threads: @ViewBag.Threads   &nbsp;Marked: @ViewBag.Marked  &nbsp; @ViewBag.Need*@
 <table class="table">
     <tr>
         <th width="500px">
             Title
         </th>
 
-        <th width="200px" style="text-align:center">
-            Idle Time
-        </th>
         <th>
-
+            Create Date
         </th>
-        <th>
+        <th width="250px">
             Product
         </th>
 
         <th>
-
+            Note
         </th>
         <th>
 
@@ -53,35 +50,31 @@
 
     @foreach (var item in Model)
     {
+      
+        
+            <tr>
+                <td width="500px">
+                    <a href=@item.url target="_blank" style="overflow: hidden; text-overflow: ellipsis">@item.title</a>
+                </td>
 
-        <tr>
-            <td width="500px">
-                <a href=@item.url target="_blank" style="overflow: hidden; text-overflow: ellipsis">@item.title</a>
-            </td>
+                <td>
+                    @item.CreateTime.ToShortDateString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product)
+                </td>
 
-            <td  style="text-align:center">
-                @item.Idle
-            </td>
-            <td></td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product)
-            </td>
+                <td>
+                    @Html.TextAreaFor(modelItem => item.Note, new { @class = "form-control", @rows = 3, @cols = 20 })
+                    <input id="Hidden1" type="hidden" value="@item.ThreadId" />
 
-            <td></td>
-            <td style="text-align:center; vertical-align:middle;">
-
-
-                @using (Html.BeginForm("Detail", "Unanswered"))
-                {
-                    <input type="hidden" name="thread" value="@item" />
-                    <input type="submit" value="Detail" class="form-control" />
-                }
-
-                @*<input id="@item.ThreadId" type="button" value="Update" class="form-control"/>*@
-            </td>
-            <td></td>
-        </tr>
-
+                </td>
+                <td style="text-align:center; vertical-align:middle;">
+                    <input id="@item.ThreadId" type="button" value="Update" class="form-control" onclick="addNote(this)" />
+                </td>
+                <td></td>
+            </tr>
+        
     }
 
 </table>

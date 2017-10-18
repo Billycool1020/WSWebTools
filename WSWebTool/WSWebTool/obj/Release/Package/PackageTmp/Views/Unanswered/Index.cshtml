@@ -71,15 +71,18 @@
         </th>
 
         <th>
-            Idle Time
+            Create Date
         </th>
-        <th>
+        <th width="250px">
             Product
         </th>
 
         <th>
+            Note
         </th>
-     
+        <th>
+
+        </th>
         <th>
 
         </th>
@@ -87,21 +90,22 @@
 
     @foreach (var item in Model)
     {
-       
-        
+
             <tr>
                 <td width="500px">
                     <a href=@item.url target="_blank" style="overflow: hidden; text-overflow: ellipsis">@item.title</a>
                 </td>
 
                 <td>
-                    @DateTime.Now - @item.CreateTime
+                    @item.CreateTime.ToShortDateString()
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Product)
                 </td>
 
                 <td>
+                    @Html.TextAreaFor(modelItem => item.Note, new { @class = "form-control", @rows = 3, @cols = 20 })
+                    <input id="Hidden1" type="hidden" value="@item.ThreadId" />
 
                 </td>
                 <td style="text-align:center; vertical-align:middle;">
@@ -122,7 +126,8 @@
             @section scripts {
                 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
                 <script src="~/Scripts/bootstrap-notify.min.js"></script>
-                <script>                    
+                <script>
+
                     function addNote(x) {
                         $(x).parent().find("textarea").attr("disabled", "disabled");
                         var serviceURL = '/Unanswered/AddNote';
@@ -144,24 +149,7 @@
                         });
                     }
 
-                    function changeproduct(x) {
-                       
-                        var serviceURL = '/Unanswered/Index';
-                        
-                        var Product = $(x).text();
-                        $.ajax({
-                            type: "Post",
-                            url: serviceURL,
-                            data: JSON.stringify({
-                                Product: Product
-                            }),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (response) {
-                              
-                            },
-                        });
-                    }
+
 
                     function note() {
                         $.notify({

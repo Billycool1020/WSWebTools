@@ -24,7 +24,7 @@ namespace WSWebTool.Controllers
             WSWebContext WSdb = new WSWebContext();
 
 
-            List<string> productlist = WSdb.ASPIISForums.Where(x => x.Product.ProductName == "IIS").Select(x => x.ForumName).ToList();
+            List<string> productlist = WSdb.ASPIISForums.Where(x => x.Product.ProductName == "IIS").OrderBy(x=>x.ForumName).Select(x => x.ForumName).ToList();
             ViewBag.productlist = productlist;
             ViewBag.product = product;
 
@@ -67,6 +67,10 @@ namespace WSWebTool.Controllers
                 }
             };
 
+            var today = DateTime.Today;
+            var month = new DateTime(today.Year, today.Month, 1);
+            list = list.Where(x => x.IsLastOp &&x.CreateTime>= month).ToList();
+
             int pageSize = 25;
             int pageNumber = (page ?? 1);
             return View(list.ToPagedList(pageNumber, pageSize));
@@ -77,7 +81,7 @@ namespace WSWebTool.Controllers
             WSWebContext WSdb = new WSWebContext();
 
 
-            List<string> productlist = WSdb.ASPIISForums.Where(x => x.Product.ProductName == "ASP.NET").Select(x => x.ForumName).ToList();
+            List<string> productlist = WSdb.ASPIISForums.Where(x => x.Product.ProductName == "ASP.NET").Select(x => x.ForumName).OrderBy(x => x).ToList();
             ViewBag.productlist = productlist;
             ViewBag.product = product;
 
@@ -88,6 +92,7 @@ namespace WSWebTool.Controllers
             var threads = from t in WSdb.ASPIISThreads
                           where t.ASPIISForum.Product.ProductName == "ASP.NET"
                           orderby t.PostDate descending
+                          where t.IsLastOp==true
                           select new UnansweredThreads
                           {
                               ThreadId = t.ThreadId,
@@ -129,7 +134,9 @@ namespace WSWebTool.Controllers
                 }
                
             });
-
+            var today = DateTime.Today;
+            var month = new DateTime(today.Year, today.Month, 1);
+            list = list.Where(x => x.IsLastOp&&x.CreateTime>= month).OrderByDescending(l => l.CreateTime).ToList();
             int pageSize = 25;
             int pageNumber = (page ?? 1);
             return View(list.ToPagedList(pageNumber, pageSize));
@@ -142,10 +149,9 @@ namespace WSWebTool.Controllers
 
             var today = DateTime.Today;
             var month = new DateTime(today.Year, today.Month, 1);
-            //var first = month.AddMonths(-1);
             var seconds = ConvertToUnixTimestamp(month);
             WSWebContext WSdb = new WSWebContext();
-            List<string> productlist = WSdb.Products.Select(x => x.ProductName).ToList();
+            List<string> productlist = WSdb.Products.Select(x => x.ProductName).OrderBy(x=>x).ToList();
             ViewBag.productlist = productlist;
             ViewBag.product = product;
 
@@ -160,9 +166,11 @@ namespace WSWebTool.Controllers
                 ViewBag.Target = "N/A";
                 forumid = WSdb.Forums.Select(x => x.Id).ToList();
             }
-            var forum = WSdb.Forums.ToList();
+            var forum = WSdb.Forums.Include("Product").ToList();
 
             SHPEntities db = new SHPEntities();
+
+
             var Threads = (from M in db.ForumMessages
                            join t in db.ForumMessageTags
                            on M.Id equals t.ForumMessageId
@@ -170,6 +178,8 @@ namespace WSWebTool.Controllers
                            select M).Count();
 
             ViewBag.Threads = Threads;
+
+           
             var Marked = (from M in db.ForumMessages
                           join t in db.ForumMessageTags
                           on M.Id equals t.ForumMessageId
@@ -180,14 +190,11 @@ namespace WSWebTool.Controllers
 
             if (!String.IsNullOrEmpty(product))
             {
-
                 var OPVAR = WSdb.Products.Where(x => x.ProductName == product).FirstOrDefault().OPVAR;
                 ViewBag.CProduct = product + "  OPVAR Target: " + OPVAR * 100 + "%";
                 ViewBag.Target = OPVAR;
                 ViewBag.Need = "Need:" + (int)(Threads * OPVAR - Marked + 1);
             }
-
-
 
 
 
@@ -206,20 +213,20 @@ namespace WSWebTool.Controllers
                              };
             var list = unanswered.ToList();
 
-            foreach (var u in list)
-            //Parallel.ForEach(list, (u) =>
+            //foreach (var u in list)
+            Parallel.ForEach(list, (u) =>
             {
-                //using (SHPEntities db2 = new SHPEntities())
-                //{
-                    var Owner = (from M in db.ForumMessages
+                using (SHPEntities db2 = new SHPEntities())
+                using (WSWebContext WSdb2 = new WSWebContext())
+                {
+                    var Owner = (from M in db2.ForumMessages
                                  where M.PostMessageId == u.ThreadId
                                  orderby M.CreatedTime
                                  select M.OwnerId).ToList();
-                    u.IsLastOp = (Owner[0] == Owner[Owner.Count - 1]);
-
-                    u.Product = forum.Where(x => x.Id.ToLower() == u.Forum.ToLower()).FirstOrDefault().Product.ProductName;
+                    u.IsLastOp = (Owner[0] == Owner[Owner.Count - 1]);                    
+                    u.Product = forum.Where(x => x.Id.ToLower().Trim() == u.Forum.ToLower().Trim()).FirstOrDefault().Product.ProductName;
                     u.CreateTime = ConvertFromUnixTimestamp(u.Temptime);
-                    var Note = WSdb.ThreadNotes.Find(u.ThreadId);
+                    var Note = WSdb2.ThreadNotes.Find(u.ThreadId);
                     if (Note != null)
                     {
                         u.Note = Note.Note;
@@ -228,11 +235,10 @@ namespace WSWebTool.Controllers
                     {
                         u.Note = "";
                     }
+                }                 
+            });
 
-               // } 
-                
-            };
-            list.OrderByDescending(x => x.CreateTime);
+            list = list.Where(x=>x.IsLastOp).OrderByDescending(x => x.CreateTime).ToList();
             int pageSize = 25;
             int pageNumber = (page ?? 1);
             return View(list.ToPagedList(pageNumber, pageSize));
