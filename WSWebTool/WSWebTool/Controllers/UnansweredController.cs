@@ -14,7 +14,7 @@ namespace WSWebTool.Controllers
     {
         public ActionResult Detail(UnansweredThreads thread)
         {
-
+           
             return View();
         }
 

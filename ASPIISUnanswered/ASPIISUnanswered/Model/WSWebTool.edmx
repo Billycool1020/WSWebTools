@@ -1,0 +1,635 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WSWebToolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ASPIISForums">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ForumId" Type="int" Nullable="false" />
+          <Property Name="ForumName" Type="nvarchar(max)" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ASPIISThreads">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ThreadId" Type="nvarchar(max)" />
+          <Property Name="PostDate" Type="datetime" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Link" Type="nvarchar(max)" />
+          <Property Name="forumId" Type="int" Nullable="false" />
+          <Property Name="IsLastOp" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Engineers">
+          <Key>
+            <PropertyRef Name="MSAlias" />
+          </Key>
+          <Property Name="MSAlias" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Chinese" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OnBoardDate" Type="datetime" Nullable="false" />
+          <Property Name="GoLiveDate" Type="datetime" />
+          <Property Name="ReadinessPool" Type="nvarchar(max)" />
+          <Property Name="EID" Type="int" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Project" Type="nvarchar(max)" />
+          <Property Name="WSAlias" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubTeamId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EscalatedThreads">
+          <Key>
+            <PropertyRef Name="ThreadId" />
+          </Key>
+          <Property Name="ThreadId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="cat_msalias" Type="nvarchar(max)" />
+          <Property Name="ThreadName" Type="nvarchar(max)" />
+          <Property Name="cat_URL" Type="nvarchar(max)" />
+          <Property Name="LastOP" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FollowUpThreads">
+          <Key>
+            <PropertyRef Name="ThreadId" />
+          </Key>
+          <Property Name="ThreadId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="cat_msalias" Type="nvarchar(max)" />
+          <Property Name="ThreadName" Type="nvarchar(max)" />
+          <Property Name="cat_URL" Type="nvarchar(max)" />
+          <Property Name="LastOP" Type="datetime" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Forums">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ForumName" Type="nvarchar(max)" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OwnerId" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SubTeamId" Type="int" Nullable="false" />
+          <Property Name="OPVAR" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OwnedTeamId" Type="int" />
+        </EntityType>
+        <EntityType Name="ThreadNotes">
+          <Key>
+            <PropertyRef Name="ThreadID" />
+          </Key>
+          <Property Name="ThreadID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_ASPIISForums_dbo_Products_ProductId">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ASPIISForums" Type="Self.ASPIISForums" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ASPIISForums">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId">
+          <End Role="ASPIISForums" Type="Self.ASPIISForums" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ASPIISThreads" Type="Self.ASPIISThreads" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASPIISForums">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ASPIISThreads">
+              <PropertyRef Name="forumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Engineers_dbo_Teams_SubTeamId">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="Engineers" Type="Self.Engineers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Engineers">
+              <PropertyRef Name="SubTeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_FollowUpThreads_dbo_Products_ProductId">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FollowUpThreads" Type="Self.FollowUpThreads" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FollowUpThreads">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Forums_dbo_Products_ProductId">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Forums" Type="Self.Forums" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Forums">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Products_dbo_Engineers_OwnerId">
+          <End Role="Engineers" Type="Self.Engineers" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Engineers">
+              <PropertyRef Name="MSAlias" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Products_dbo_Teams_SubTeamId">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="SubTeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WSWebToolModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ASPIISForums" EntityType="Self.ASPIISForums" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ASPIISThreads" EntityType="Self.ASPIISThreads" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Engineers" EntityType="Self.Engineers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EscalatedThreads" EntityType="Self.EscalatedThreads" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FollowUpThreads" EntityType="Self.FollowUpThreads" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Forums" EntityType="Self.Forums" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThreadNotes" EntityType="Self.ThreadNotes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_ASPIISForums_dbo_Products_ProductId" Association="Self.FK_dbo_ASPIISForums_dbo_Products_ProductId">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ASPIISForums" EntitySet="ASPIISForums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId" Association="Self.FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId">
+            <End Role="ASPIISForums" EntitySet="ASPIISForums" />
+            <End Role="ASPIISThreads" EntitySet="ASPIISThreads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Engineers_dbo_Teams_SubTeamId" Association="Self.FK_dbo_Engineers_dbo_Teams_SubTeamId">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Engineers" EntitySet="Engineers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_FollowUpThreads_dbo_Products_ProductId" Association="Self.FK_dbo_FollowUpThreads_dbo_Products_ProductId">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="FollowUpThreads" EntitySet="FollowUpThreads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Forums_dbo_Products_ProductId" Association="Self.FK_dbo_Forums_dbo_Products_ProductId">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Forums" EntitySet="Forums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_Engineers_OwnerId" Association="Self.FK_dbo_Products_dbo_Engineers_OwnerId">
+            <End Role="Engineers" EntitySet="Engineers" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_Teams_SubTeamId" Association="Self.FK_dbo_Products_dbo_Teams_SubTeamId">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WSWebToolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ASPIISForum">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ForumId" Type="Int32" Nullable="false" />
+          <Property Name="ForumName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_ASPIISForums_dbo_Products_ProductId" FromRole="ASPIISForums" ToRole="Products" />
+          <NavigationProperty Name="ASPIISThreads" Relationship="WSWebToolModel.FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId" FromRole="ASPIISForum" ToRole="ASPIISThread" />
+        </EntityType>
+        <EntityType Name="Engineer">
+          <Key>
+            <PropertyRef Name="MSAlias" />
+          </Key>
+          <Property Name="MSAlias" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Chinese" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OnBoardDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GoLiveDate" Type="DateTime" Precision="3" />
+          <Property Name="ReadinessPool" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EID" Type="Int32" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Project" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WSAlias" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubTeamId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_dbo_Engineers_dbo_Teams_SubTeamId" FromRole="Engineers" ToRole="Teams" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_dbo_Products_dbo_Engineers_OwnerId" FromRole="Engineers" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="EscalatedThread">
+          <Key>
+            <PropertyRef Name="ThreadId" />
+          </Key>
+          <Property Name="ThreadId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cat_msalias" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ThreadName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="cat_URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastOP" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="FollowUpThread">
+          <Key>
+            <PropertyRef Name="ThreadId" />
+          </Key>
+          <Property Name="ThreadId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cat_msalias" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ThreadName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="cat_URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastOP" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_FollowUpThreads_dbo_Products_ProductId" FromRole="FollowUpThreads" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Forum">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ForumName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_Forums_dbo_Products_ProductId" FromRole="Forums" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OwnerId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SubTeamId" Type="Int32" Nullable="false" />
+          <Property Name="OPVAR" Type="Double" Nullable="false" />
+          <NavigationProperty Name="ASPIISForums" Relationship="Self.FK_dbo_ASPIISForums_dbo_Products_ProductId" FromRole="Products" ToRole="ASPIISForums" />
+          <NavigationProperty Name="Engineer" Relationship="Self.FK_dbo_Products_dbo_Engineers_OwnerId" FromRole="Products" ToRole="Engineers" />
+          <NavigationProperty Name="FollowUpThreads" Relationship="Self.FK_dbo_FollowUpThreads_dbo_Products_ProductId" FromRole="Products" ToRole="FollowUpThreads" />
+          <NavigationProperty Name="Forums" Relationship="Self.FK_dbo_Forums_dbo_Products_ProductId" FromRole="Products" ToRole="Forums" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_dbo_Products_dbo_Teams_SubTeamId" FromRole="Products" ToRole="Teams" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OwnedTeamId" Type="Int32" />
+          <NavigationProperty Name="Engineers" Relationship="Self.FK_dbo_Engineers_dbo_Teams_SubTeamId" FromRole="Teams" ToRole="Engineers" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_dbo_Products_dbo_Teams_SubTeamId" FromRole="Teams" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="ThreadNote">
+          <Key>
+            <PropertyRef Name="ThreadID" />
+          </Key>
+          <Property Name="ThreadID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_dbo_ASPIISForums_dbo_Products_ProductId">
+          <End Role="Products" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ASPIISForums" Type="Self.ASPIISForum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ASPIISForums">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Engineers_dbo_Teams_SubTeamId">
+          <End Role="Teams" Type="Self.Team" Multiplicity="1" />
+          <End Role="Engineers" Type="Self.Engineer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Engineers">
+              <PropertyRef Name="SubTeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Products_dbo_Engineers_OwnerId">
+          <End Role="Engineers" Type="Self.Engineer" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Engineers">
+              <PropertyRef Name="MSAlias" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_FollowUpThreads_dbo_Products_ProductId">
+          <End Role="Products" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FollowUpThreads" Type="Self.FollowUpThread" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FollowUpThreads">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Forums_dbo_Products_ProductId">
+          <End Role="Products" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Forums" Type="Self.Forum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Forums">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Products_dbo_Teams_SubTeamId">
+          <End Role="Teams" Type="Self.Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="SubTeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WSWebToolEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="ASPIISForums" EntityType="Self.ASPIISForum" />
+          <EntitySet Name="Engineers" EntityType="Self.Engineer" />
+          <EntitySet Name="EscalatedThreads" EntityType="Self.EscalatedThread" />
+          <EntitySet Name="FollowUpThreads" EntityType="Self.FollowUpThread" />
+          <EntitySet Name="Forums" EntityType="Self.Forum" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Teams" EntityType="Self.Team" />
+          <EntitySet Name="ThreadNotes" EntityType="Self.ThreadNote" />
+          <AssociationSet Name="FK_dbo_ASPIISForums_dbo_Products_ProductId" Association="Self.FK_dbo_ASPIISForums_dbo_Products_ProductId">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ASPIISForums" EntitySet="ASPIISForums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Engineers_dbo_Teams_SubTeamId" Association="Self.FK_dbo_Engineers_dbo_Teams_SubTeamId">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Engineers" EntitySet="Engineers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_Engineers_OwnerId" Association="Self.FK_dbo_Products_dbo_Engineers_OwnerId">
+            <End Role="Engineers" EntitySet="Engineers" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_FollowUpThreads_dbo_Products_ProductId" Association="Self.FK_dbo_FollowUpThreads_dbo_Products_ProductId">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="FollowUpThreads" EntitySet="FollowUpThreads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Forums_dbo_Products_ProductId" Association="Self.FK_dbo_Forums_dbo_Products_ProductId">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Forums" EntitySet="Forums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_Teams_SubTeamId" Association="Self.FK_dbo_Products_dbo_Teams_SubTeamId">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <EntitySet Name="ASPIISThreads" EntityType="WSWebToolModel.ASPIISThread" />
+          <AssociationSet Name="FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId" Association="WSWebToolModel.FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId">
+            <End Role="ASPIISForum" EntitySet="ASPIISForums" />
+            <End Role="ASPIISThread" EntitySet="ASPIISThreads" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ASPIISThread">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ThreadId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="forumId" Type="Int32" Nullable="false" />
+          <Property Name="IsLastOp" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ASPIISForum" Relationship="WSWebToolModel.FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId" FromRole="ASPIISThread" ToRole="ASPIISForum" />
+        </EntityType>
+        <Association Name="FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId">
+          <End Type="WSWebToolModel.ASPIISForum" Role="ASPIISForum" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="WSWebToolModel.ASPIISThread" Role="ASPIISThread" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASPIISForum">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ASPIISThread">
+              <PropertyRef Name="forumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WSWebToolModelStoreContainer" CdmEntityContainer="WSWebToolEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="WSWebToolModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ASPIISForums">
+            <EntityTypeMapping TypeName="WSWebToolModel.ASPIISForum">
+              <MappingFragment StoreEntitySet="ASPIISForums">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ForumId" ColumnName="ForumId" />
+                <ScalarProperty Name="ForumName" ColumnName="ForumName" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Engineers">
+            <EntityTypeMapping TypeName="WSWebToolModel.Engineer">
+              <MappingFragment StoreEntitySet="Engineers">
+                <ScalarProperty Name="MSAlias" ColumnName="MSAlias" />
+                <ScalarProperty Name="Chinese" ColumnName="Chinese" />
+                <ScalarProperty Name="OnBoardDate" ColumnName="OnBoardDate" />
+                <ScalarProperty Name="GoLiveDate" ColumnName="GoLiveDate" />
+                <ScalarProperty Name="ReadinessPool" ColumnName="ReadinessPool" />
+                <ScalarProperty Name="EID" ColumnName="EID" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+                <ScalarProperty Name="WSAlias" ColumnName="WSAlias" />
+                <ScalarProperty Name="SubTeamId" ColumnName="SubTeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EscalatedThreads">
+            <EntityTypeMapping TypeName="WSWebToolModel.EscalatedThread">
+              <MappingFragment StoreEntitySet="EscalatedThreads">
+                <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
+                <ScalarProperty Name="cat_msalias" ColumnName="cat_msalias" />
+                <ScalarProperty Name="ThreadName" ColumnName="ThreadName" />
+                <ScalarProperty Name="cat_URL" ColumnName="cat_URL" />
+                <ScalarProperty Name="LastOP" ColumnName="LastOP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FollowUpThreads">
+            <EntityTypeMapping TypeName="WSWebToolModel.FollowUpThread">
+              <MappingFragment StoreEntitySet="FollowUpThreads">
+                <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
+                <ScalarProperty Name="cat_msalias" ColumnName="cat_msalias" />
+                <ScalarProperty Name="ThreadName" ColumnName="ThreadName" />
+                <ScalarProperty Name="cat_URL" ColumnName="cat_URL" />
+                <ScalarProperty Name="LastOP" ColumnName="LastOP" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Forums">
+            <EntityTypeMapping TypeName="WSWebToolModel.Forum">
+              <MappingFragment StoreEntitySet="Forums">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ForumName" ColumnName="ForumName" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="WSWebToolModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="SubTeamId" ColumnName="SubTeamId" />
+                <ScalarProperty Name="OPVAR" ColumnName="OPVAR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="WSWebToolModel.Team">
+              <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="OwnedTeamId" ColumnName="OwnedTeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ThreadNotes">
+            <EntityTypeMapping TypeName="WSWebToolModel.ThreadNote">
+              <MappingFragment StoreEntitySet="ThreadNotes">
+                <ScalarProperty Name="ThreadID" ColumnName="ThreadID" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ASPIISThreads">
+            <EntityTypeMapping TypeName="WSWebToolModel.ASPIISThread">
+              <MappingFragment StoreEntitySet="ASPIISThreads">
+                <ScalarProperty Name="IsLastOp" ColumnName="IsLastOp" />
+                <ScalarProperty Name="forumId" ColumnName="forumId" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PostDate" ColumnName="PostDate" />
+                <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

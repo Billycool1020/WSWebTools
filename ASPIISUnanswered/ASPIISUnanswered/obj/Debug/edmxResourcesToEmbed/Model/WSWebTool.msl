@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WSWebToolModelStoreContainer" CdmEntityContainer="WSWebToolEntities">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="WSWebToolModel.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ASPIISForums">
+      <EntityTypeMapping TypeName="WSWebToolModel.ASPIISForum">
+        <MappingFragment StoreEntitySet="ASPIISForums">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ForumId" ColumnName="ForumId" />
+          <ScalarProperty Name="ForumName" ColumnName="ForumName" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Engineers">
+      <EntityTypeMapping TypeName="WSWebToolModel.Engineer">
+        <MappingFragment StoreEntitySet="Engineers">
+          <ScalarProperty Name="MSAlias" ColumnName="MSAlias" />
+          <ScalarProperty Name="Chinese" ColumnName="Chinese" />
+          <ScalarProperty Name="OnBoardDate" ColumnName="OnBoardDate" />
+          <ScalarProperty Name="GoLiveDate" ColumnName="GoLiveDate" />
+          <ScalarProperty Name="ReadinessPool" ColumnName="ReadinessPool" />
+          <ScalarProperty Name="EID" ColumnName="EID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Project" ColumnName="Project" />
+          <ScalarProperty Name="WSAlias" ColumnName="WSAlias" />
+          <ScalarProperty Name="SubTeamId" ColumnName="SubTeamId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EscalatedThreads">
+      <EntityTypeMapping TypeName="WSWebToolModel.EscalatedThread">
+        <MappingFragment StoreEntitySet="EscalatedThreads">
+          <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
+          <ScalarProperty Name="cat_msalias" ColumnName="cat_msalias" />
+          <ScalarProperty Name="ThreadName" ColumnName="ThreadName" />
+          <ScalarProperty Name="cat_URL" ColumnName="cat_URL" />
+          <ScalarProperty Name="LastOP" ColumnName="LastOP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FollowUpThreads">
+      <EntityTypeMapping TypeName="WSWebToolModel.FollowUpThread">
+        <MappingFragment StoreEntitySet="FollowUpThreads">
+          <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
+          <ScalarProperty Name="cat_msalias" ColumnName="cat_msalias" />
+          <ScalarProperty Name="ThreadName" ColumnName="ThreadName" />
+          <ScalarProperty Name="cat_URL" ColumnName="cat_URL" />
+          <ScalarProperty Name="LastOP" ColumnName="LastOP" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Forums">
+      <EntityTypeMapping TypeName="WSWebToolModel.Forum">
+        <MappingFragment StoreEntitySet="Forums">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ForumName" ColumnName="ForumName" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="WSWebToolModel.Product">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+          <ScalarProperty Name="SubTeamId" ColumnName="SubTeamId" />
+          <ScalarProperty Name="OPVAR" ColumnName="OPVAR" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teams">
+      <EntityTypeMapping TypeName="WSWebToolModel.Team">
+        <MappingFragment StoreEntitySet="Teams">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+          <ScalarProperty Name="OwnedTeamId" ColumnName="OwnedTeamId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ThreadNotes">
+      <EntityTypeMapping TypeName="WSWebToolModel.ThreadNote">
+        <MappingFragment StoreEntitySet="ThreadNotes">
+          <ScalarProperty Name="ThreadID" ColumnName="ThreadID" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ASPIISThreads">
+      <EntityTypeMapping TypeName="WSWebToolModel.ASPIISThread">
+        <MappingFragment StoreEntitySet="ASPIISThreads">
+          <ScalarProperty Name="IsLastOp" ColumnName="IsLastOp" />
+          <ScalarProperty Name="forumId" ColumnName="forumId" />
+          <ScalarProperty Name="Link" ColumnName="Link" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="PostDate" ColumnName="PostDate" />
+          <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
