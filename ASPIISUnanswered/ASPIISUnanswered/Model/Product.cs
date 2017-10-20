@@ -19,7 +19,7 @@ namespace ASPIISUnanswered.Model
         {
             this.ASPIISForums = new HashSet<ASPIISForum>();
             this.FollowUpThreads = new HashSet<FollowUpThread>();
-            this.Forums = new HashSet<Forum>();
+            this.MSDNForums = new HashSet<MSDNForum>();
         }
     
         public int Id { get; set; }
@@ -34,7 +34,7 @@ namespace ASPIISUnanswered.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FollowUpThread> FollowUpThreads { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Forum> Forums { get; set; }
+        public virtual ICollection<MSDNForum> MSDNForums { get; set; }
         public virtual Team Team { get; set; }
     }
 }

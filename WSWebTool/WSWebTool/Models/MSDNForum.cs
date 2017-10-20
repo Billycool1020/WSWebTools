@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace WSWebTool.Models
 {
-    [Table("Forums")]
-    public class Forum
+    [Table("MSDNForums")]
+    public class MSDNForum
     {
         public string Id { get; set; }
         public string ForumName { get; set; }

@@ -4,24 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bf6345e499184303a0d4233e3d0aa522" Name="Diagram1">
-        <EntityTypeShape EntityType="WSWebToolModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WSWebToolModel.ASPIISForum" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="WSWebToolModel.Engineer" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="WSWebToolModel.EscalatedThread" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WSWebToolModel.FollowUpThread" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WSWebToolModel.Forum" Width="1.5" PointX="7.5" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="WSWebToolModel.Product" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="WSWebToolModel.Team" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="WSWebToolModel.ThreadNote" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="b009536f2e0c417e8552458f1f75bef9" Name="Diagram1">
+        <EntityTypeShape EntityType="WSWebToolModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSWebToolModel.ASPIISForum" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSWebToolModel.ASPIISThread" Width="1.5" PointX="9.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSWebToolModel.Engineer" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSWebToolModel.EscalatedThread" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSWebToolModel.FollowUpThread" Width="1.5" PointX="7.5" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSWebToolModel.MSDNForum" Width="1.5" PointX="7.5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSWebToolModel.MSDNThread" Width="1.5" PointX="10.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSWebToolModel.Product" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSWebToolModel.sysdiagram" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSWebToolModel.Team" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSWebToolModel.ThreadNote" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
         <AssociationConnector Association="WSWebToolModel.FK_dbo_ASPIISForums_dbo_Products_ProductId" ManuallyRouted="false" />
+        <AssociationConnector Association="WSWebToolModel.FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId" ManuallyRouted="false" />
         <AssociationConnector Association="WSWebToolModel.FK_dbo_Engineers_dbo_Teams_SubTeamId" ManuallyRouted="false" />
         <AssociationConnector Association="WSWebToolModel.FK_dbo_Products_dbo_Engineers_OwnerId" ManuallyRouted="false" />
         <AssociationConnector Association="WSWebToolModel.FK_dbo_FollowUpThreads_dbo_Products_ProductId" ManuallyRouted="false" />
         <AssociationConnector Association="WSWebToolModel.FK_dbo_Forums_dbo_Products_ProductId" ManuallyRouted="false" />
         <AssociationConnector Association="WSWebToolModel.FK_dbo_Products_dbo_Teams_SubTeamId" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="WSWebToolModel.ASPIISThread" Width="1.5" PointX="9.75" PointY="1" />
-        <AssociationConnector Association="WSWebToolModel.FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

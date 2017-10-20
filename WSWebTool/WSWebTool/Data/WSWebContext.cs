@@ -18,11 +18,12 @@ namespace WSWebTool.Data
         public virtual DbSet<Engineer> Engineers { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<Forum> Forums { get; set; }
+        public virtual DbSet<MSDNForum> MSDNForums { get; set; }
         public virtual DbSet<ThreadNote> ThreadNotes { get; set; }
         public virtual DbSet<ASPIISForum> ASPIISForums { get; set; }
         public virtual DbSet<ASPIISThread> ASPIISThreads { get; set; }
-
+        public virtual DbSet<MSDNThread> MSDNThreads { get; set; }
+        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Team>()

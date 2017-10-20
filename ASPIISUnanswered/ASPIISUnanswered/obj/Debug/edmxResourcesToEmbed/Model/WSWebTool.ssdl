@@ -68,13 +68,26 @@
     <Property Name="LastOP" Type="datetime" Nullable="false" />
     <Property Name="ProductId" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="Forums">
+  <EntityType Name="MSDNForums">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="ForumName" Type="nvarchar(max)" />
     <Property Name="ProductId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MSDNThreads">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ThreadId" Type="nvarchar(max)" />
+    <Property Name="PostDate" Type="datetime" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" />
+    <Property Name="Link" Type="nvarchar(max)" />
+    <Property Name="IsLastOp" Type="bit" Nullable="false" />
+    <Property Name="IsAnswered" Type="bit" Nullable="false" />
+    <Property Name="Product" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Products">
     <Key>
@@ -85,6 +98,16 @@
     <Property Name="ProductName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="SubTeamId" Type="int" Nullable="false" />
     <Property Name="OPVAR" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="Teams">
     <Key>
@@ -159,12 +182,12 @@
     <End Role="Products" Type="Self.Products" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="Forums" Type="Self.Forums" Multiplicity="*" />
+    <End Role="MSDNForums" Type="Self.MSDNForums" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Products">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Forums">
+      <Dependent Role="MSDNForums">
         <PropertyRef Name="ProductId" />
       </Dependent>
     </ReferentialConstraint>
@@ -202,8 +225,10 @@
     <EntitySet Name="Engineers" EntityType="Self.Engineers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EscalatedThreads" EntityType="Self.EscalatedThreads" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FollowUpThreads" EntityType="Self.FollowUpThreads" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Forums" EntityType="Self.Forums" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MSDNForums" EntityType="Self.MSDNForums" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MSDNThreads" EntityType="Self.MSDNThreads" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ThreadNotes" EntityType="Self.ThreadNotes" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_dbo_ASPIISForums_dbo_Products_ProductId" Association="Self.FK_dbo_ASPIISForums_dbo_Products_ProductId">
@@ -224,7 +249,7 @@
     </AssociationSet>
     <AssociationSet Name="FK_dbo_Forums_dbo_Products_ProductId" Association="Self.FK_dbo_Forums_dbo_Products_ProductId">
       <End Role="Products" EntitySet="Products" />
-      <End Role="Forums" EntitySet="Forums" />
+      <End Role="MSDNForums" EntitySet="MSDNForums" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_Products_dbo_Engineers_OwnerId" Association="Self.FK_dbo_Products_dbo_Engineers_OwnerId">
       <End Role="Engineers" EntitySet="Engineers" />

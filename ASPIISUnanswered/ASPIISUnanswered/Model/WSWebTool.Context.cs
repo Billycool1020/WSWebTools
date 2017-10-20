@@ -27,13 +27,15 @@ namespace ASPIISUnanswered.Model
     
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<ASPIISForum> ASPIISForums { get; set; }
+        public virtual DbSet<ASPIISThread> ASPIISThreads { get; set; }
         public virtual DbSet<Engineer> Engineers { get; set; }
         public virtual DbSet<EscalatedThread> EscalatedThreads { get; set; }
         public virtual DbSet<FollowUpThread> FollowUpThreads { get; set; }
-        public virtual DbSet<Forum> Forums { get; set; }
+        public virtual DbSet<MSDNForum> MSDNForums { get; set; }
+        public virtual DbSet<MSDNThread> MSDNThreads { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<ThreadNote> ThreadNotes { get; set; }
-        public virtual DbSet<ASPIISThread> ASPIISThreads { get; set; }
     }
 }

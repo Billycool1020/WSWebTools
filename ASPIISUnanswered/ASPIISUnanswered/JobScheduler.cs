@@ -13,7 +13,7 @@ namespace ASPIISUnanswered
 
         private IScheduler _scheduler;
         //private string StrCron = "0 0 8 ? * MON-FRI"; //每周一到周五 8:00AM
-        private string StrCron = "0 0/5 * * * ?";
+        private string StrCron = "0 0/30 * * * ?";
         public JobScheduler()
         {
             IJobDetail job = JobBuilder.Create<ThreadsJob>().Build();

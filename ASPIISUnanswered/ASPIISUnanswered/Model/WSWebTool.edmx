@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="WSWebToolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="WSWebToolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -73,13 +73,26 @@
           <Property Name="LastOP" Type="datetime" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Forums">
+        <EntityType Name="MSDNForums">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="ForumName" Type="nvarchar(max)" />
           <Property Name="ProductId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MSDNThreads">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ThreadId" Type="nvarchar(max)" />
+          <Property Name="PostDate" Type="datetime" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Link" Type="nvarchar(max)" />
+          <Property Name="IsLastOp" Type="bit" Nullable="false" />
+          <Property Name="IsAnswered" Type="bit" Nullable="false" />
+          <Property Name="Product" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -90,6 +103,16 @@
           <Property Name="ProductName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="SubTeamId" Type="int" Nullable="false" />
           <Property Name="OPVAR" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Teams">
           <Key>
@@ -164,12 +187,12 @@
           <End Role="Products" Type="Self.Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Forums" Type="Self.Forums" Multiplicity="*" />
+          <End Role="MSDNForums" Type="Self.MSDNForums" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Forums">
+            <Dependent Role="MSDNForums">
               <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
@@ -207,8 +230,10 @@
           <EntitySet Name="Engineers" EntityType="Self.Engineers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EscalatedThreads" EntityType="Self.EscalatedThreads" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FollowUpThreads" EntityType="Self.FollowUpThreads" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Forums" EntityType="Self.Forums" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MSDNForums" EntityType="Self.MSDNForums" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MSDNThreads" EntityType="Self.MSDNThreads" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ThreadNotes" EntityType="Self.ThreadNotes" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_ASPIISForums_dbo_Products_ProductId" Association="Self.FK_dbo_ASPIISForums_dbo_Products_ProductId">
@@ -229,7 +254,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Forums_dbo_Products_ProductId" Association="Self.FK_dbo_Forums_dbo_Products_ProductId">
             <End Role="Products" EntitySet="Products" />
-            <End Role="Forums" EntitySet="Forums" />
+            <End Role="MSDNForums" EntitySet="MSDNForums" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Products_dbo_Engineers_OwnerId" Association="Self.FK_dbo_Products_dbo_Engineers_OwnerId">
             <End Role="Engineers" EntitySet="Engineers" />
@@ -240,7 +265,8 @@
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WSWebToolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -263,7 +289,20 @@
           <Property Name="ForumName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="Self.FK_dbo_ASPIISForums_dbo_Products_ProductId" FromRole="ASPIISForums" ToRole="Products" />
-          <NavigationProperty Name="ASPIISThreads" Relationship="WSWebToolModel.FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId" FromRole="ASPIISForum" ToRole="ASPIISThread" />
+          <NavigationProperty Name="ASPIISThreads" Relationship="Self.FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId" FromRole="ASPIISForums" ToRole="ASPIISThreads" />
+        </EntityType>
+        <EntityType Name="ASPIISThread">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ThreadId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="forumId" Type="Int32" Nullable="false" />
+          <Property Name="IsLastOp" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ASPIISForum" Relationship="Self.FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId" FromRole="ASPIISThreads" ToRole="ASPIISForums" />
         </EntityType>
         <EntityType Name="Engineer">
           <Key>
@@ -305,14 +344,27 @@
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="Self.FK_dbo_FollowUpThreads_dbo_Products_ProductId" FromRole="FollowUpThreads" ToRole="Products" />
         </EntityType>
-        <EntityType Name="Forum">
+        <EntityType Name="MSDNForum">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ForumName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_Forums_dbo_Products_ProductId" FromRole="Forums" ToRole="Products" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_Forums_dbo_Products_ProductId" FromRole="MSDNForums" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="MSDNThread">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ThreadId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsLastOp" Type="Boolean" Nullable="false" />
+          <Property Name="IsAnswered" Type="Boolean" Nullable="false" />
+          <Property Name="Product" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -326,8 +378,18 @@
           <NavigationProperty Name="ASPIISForums" Relationship="Self.FK_dbo_ASPIISForums_dbo_Products_ProductId" FromRole="Products" ToRole="ASPIISForums" />
           <NavigationProperty Name="Engineer" Relationship="Self.FK_dbo_Products_dbo_Engineers_OwnerId" FromRole="Products" ToRole="Engineers" />
           <NavigationProperty Name="FollowUpThreads" Relationship="Self.FK_dbo_FollowUpThreads_dbo_Products_ProductId" FromRole="Products" ToRole="FollowUpThreads" />
-          <NavigationProperty Name="Forums" Relationship="Self.FK_dbo_Forums_dbo_Products_ProductId" FromRole="Products" ToRole="Forums" />
+          <NavigationProperty Name="MSDNForums" Relationship="Self.FK_dbo_Forums_dbo_Products_ProductId" FromRole="Products" ToRole="MSDNForums" />
           <NavigationProperty Name="Team" Relationship="Self.FK_dbo_Products_dbo_Teams_SubTeamId" FromRole="Products" ToRole="Teams" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
@@ -357,6 +419,20 @@
             </Principal>
             <Dependent Role="ASPIISForums">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId">
+          <End Role="ASPIISForums" Type="Self.ASPIISForum" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ASPIISThreads" Type="Self.ASPIISThread" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASPIISForums">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ASPIISThreads">
+              <PropertyRef Name="forumId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -402,12 +478,12 @@
           <End Role="Products" Type="Self.Product" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Forums" Type="Self.Forum" Multiplicity="*" />
+          <End Role="MSDNForums" Type="Self.MSDNForum" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Forums">
+            <Dependent Role="MSDNForums">
               <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
@@ -429,16 +505,23 @@
         <EntityContainer Name="WSWebToolEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="ASPIISForums" EntityType="Self.ASPIISForum" />
+          <EntitySet Name="ASPIISThreads" EntityType="Self.ASPIISThread" />
           <EntitySet Name="Engineers" EntityType="Self.Engineer" />
           <EntitySet Name="EscalatedThreads" EntityType="Self.EscalatedThread" />
           <EntitySet Name="FollowUpThreads" EntityType="Self.FollowUpThread" />
-          <EntitySet Name="Forums" EntityType="Self.Forum" />
+          <EntitySet Name="MSDNForums" EntityType="Self.MSDNForum" />
+          <EntitySet Name="MSDNThreads" EntityType="Self.MSDNThread" />
           <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Teams" EntityType="Self.Team" />
           <EntitySet Name="ThreadNotes" EntityType="Self.ThreadNote" />
           <AssociationSet Name="FK_dbo_ASPIISForums_dbo_Products_ProductId" Association="Self.FK_dbo_ASPIISForums_dbo_Products_ProductId">
             <End Role="Products" EntitySet="Products" />
             <End Role="ASPIISForums" EntitySet="ASPIISForums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId" Association="Self.FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId">
+            <End Role="ASPIISForums" EntitySet="ASPIISForums" />
+            <End Role="ASPIISThreads" EntitySet="ASPIISThreads" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Engineers_dbo_Teams_SubTeamId" Association="Self.FK_dbo_Engineers_dbo_Teams_SubTeamId">
             <End Role="Teams" EntitySet="Teams" />
@@ -454,45 +537,13 @@
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Forums_dbo_Products_ProductId" Association="Self.FK_dbo_Forums_dbo_Products_ProductId">
             <End Role="Products" EntitySet="Products" />
-            <End Role="Forums" EntitySet="Forums" />
+            <End Role="MSDNForums" EntitySet="MSDNForums" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Products_dbo_Teams_SubTeamId" Association="Self.FK_dbo_Products_dbo_Teams_SubTeamId">
             <End Role="Teams" EntitySet="Teams" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <EntitySet Name="ASPIISThreads" EntityType="WSWebToolModel.ASPIISThread" />
-          <AssociationSet Name="FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId" Association="WSWebToolModel.FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId">
-            <End Role="ASPIISForum" EntitySet="ASPIISForums" />
-            <End Role="ASPIISThread" EntitySet="ASPIISThreads" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="ASPIISThread">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ThreadId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PostDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="forumId" Type="Int32" Nullable="false" />
-          <Property Name="IsLastOp" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ASPIISForum" Relationship="WSWebToolModel.FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId" FromRole="ASPIISThread" ToRole="ASPIISForum" />
-        </EntityType>
-        <Association Name="FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId">
-          <End Type="WSWebToolModel.ASPIISForum" Role="ASPIISForum" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="WSWebToolModel.ASPIISThread" Role="ASPIISThread" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ASPIISForum">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ASPIISThread">
-              <PropertyRef Name="forumId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -516,6 +567,19 @@
                 <ScalarProperty Name="ForumId" ColumnName="ForumId" />
                 <ScalarProperty Name="ForumName" ColumnName="ForumName" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ASPIISThreads">
+            <EntityTypeMapping TypeName="WSWebToolModel.ASPIISThread">
+              <MappingFragment StoreEntitySet="ASPIISThreads">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
+                <ScalarProperty Name="PostDate" ColumnName="PostDate" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="forumId" ColumnName="forumId" />
+                <ScalarProperty Name="IsLastOp" ColumnName="IsLastOp" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -559,12 +623,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Forums">
-            <EntityTypeMapping TypeName="WSWebToolModel.Forum">
-              <MappingFragment StoreEntitySet="Forums">
+          <EntitySetMapping Name="MSDNForums">
+            <EntityTypeMapping TypeName="WSWebToolModel.MSDNForum">
+              <MappingFragment StoreEntitySet="MSDNForums">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ForumName" ColumnName="ForumName" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MSDNThreads">
+            <EntityTypeMapping TypeName="WSWebToolModel.MSDNThread">
+              <MappingFragment StoreEntitySet="MSDNThreads">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
+                <ScalarProperty Name="PostDate" ColumnName="PostDate" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="IsLastOp" ColumnName="IsLastOp" />
+                <ScalarProperty Name="IsAnswered" ColumnName="IsAnswered" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -576,6 +654,17 @@
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="SubTeamId" ColumnName="SubTeamId" />
                 <ScalarProperty Name="OPVAR" ColumnName="OPVAR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="WSWebToolModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -593,19 +682,6 @@
               <MappingFragment StoreEntitySet="ThreadNotes">
                 <ScalarProperty Name="ThreadID" ColumnName="ThreadID" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ASPIISThreads">
-            <EntityTypeMapping TypeName="WSWebToolModel.ASPIISThread">
-              <MappingFragment StoreEntitySet="ASPIISThreads">
-                <ScalarProperty Name="IsLastOp" ColumnName="IsLastOp" />
-                <ScalarProperty Name="forumId" ColumnName="forumId" />
-                <ScalarProperty Name="Link" ColumnName="Link" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="PostDate" ColumnName="PostDate" />
-                <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

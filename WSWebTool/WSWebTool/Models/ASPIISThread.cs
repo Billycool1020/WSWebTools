@@ -17,8 +17,8 @@ namespace WSWebTool.Models
         public string Title { get; set; }
         public string Link { get; set; }
 
-        [ForeignKey("ASPIISForum")]
-        public int forumId { get; set; }        
+        [ForeignKey("ASPIISForum")]        
+        public int ForumId { get; set; }        
         public bool IsLastOp { get; set; }
 
 

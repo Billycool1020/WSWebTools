@@ -102,9 +102,9 @@ C:\Users\v-haowli\Documents\GitHub\WSWebTools\WSWebTool\WSWebTool\bin\System.Web
 C:\Users\v-haowli\Documents\GitHub\WSWebTools\WSWebTool\WSWebTool\bin\System.Web.WebPages.xml
 C:\Users\v-haowli\Documents\GitHub\WSWebTools\WSWebTool\WSWebTool\bin\System.Web.WebPages.Deployment.xml
 C:\Users\v-haowli\Documents\GitHub\WSWebTools\WSWebTool\WSWebTool\bin\System.Web.WebPages.Razor.xml
-C:\Users\v-haowli\Documents\GitHub\WSWebTools\WSWebTool\WSWebTool\obj\Debug\WSWebTool.csprojResolveAssemblyReference.cache
+C:\Users\v-haowli\Documents\GitHub\WSWebTools\WSWebTool\WSWebTool\obj\Debug\WSWebTool.Migrations.initial.resources
+C:\Users\v-haowli\Documents\GitHub\WSWebTools\WSWebTool\WSWebTool\obj\Debug\WSWebTool.csproj.GenerateResource.Cache
 C:\Users\v-haowli\Documents\GitHub\WSWebTools\WSWebTool\WSWebTool\obj\Debug\WSWebTool.csproj.CoreCompileInputs.cache
 C:\Users\v-haowli\Documents\GitHub\WSWebTools\WSWebTool\WSWebTool\obj\Debug\WSWebTool.dll
 C:\Users\v-haowli\Documents\GitHub\WSWebTools\WSWebTool\WSWebTool\obj\Debug\WSWebTool.pdb
-C:\Users\v-haowli\Documents\GitHub\WSWebTools\WSWebTool\WSWebTool\obj\Debug\WSWebTool.Migrations.initial.resources
-C:\Users\v-haowli\Documents\GitHub\WSWebTools\WSWebTool\WSWebTool\obj\Debug\WSWebTool.csproj.GenerateResource.Cache
+C:\Users\v-haowli\Documents\GitHub\WSWebTools\WSWebTool\WSWebTool\obj\Debug\WSWebTool.csprojResolveAssemblyReference.cache

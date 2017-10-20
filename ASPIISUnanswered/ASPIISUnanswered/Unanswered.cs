@@ -76,7 +76,7 @@ namespace ASPIISUnanswered
             var f = true;
             var index = 0;
 
-            //List<ASPIISThread> list = new List<ASPIISThread>();
+          
             PostedTime pt = new PostedTime();
             while (f)
             {

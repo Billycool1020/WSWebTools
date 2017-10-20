@@ -67,8 +67,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Unanswered.cs" />
-    <Compile Include="JobScheduler.cs" />
     <Compile Include="Model\ASPIISForum.cs">
       <DependentUpon>WSWebTool.tt</DependentUpon>
     </Compile>
@@ -87,10 +85,46 @@
     <Compile Include="Model\FollowUpThread.cs">
       <DependentUpon>WSWebTool.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Forum.cs">
+    <Compile Include="Model\ForumMessage.cs">
+      <DependentUpon>MSDN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ForumMessageKeyword.cs">
+      <DependentUpon>MSDN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ForumMessageLexi.cs">
+      <DependentUpon>MSDN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ForumMessageTag.cs">
+      <DependentUpon>MSDN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ForumUser.cs">
+      <DependentUpon>MSDN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MSDN.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MSDN.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MSDN.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MSDN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MSDN.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MSDN.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MSDNForum.cs">
+      <DependentUpon>WSWebTool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MSDNThread.cs">
       <DependentUpon>WSWebTool.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Product.cs">
+      <DependentUpon>WSWebTool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sysdiagram.cs">
       <DependentUpon>WSWebTool.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Team.cs">
@@ -114,15 +148,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WSWebTool.edmx</DependentUpon>
     </Compile>
+    <Compile Include="MSDNUnanswered.cs" />
+    <Compile Include="Unanswered.cs" />
+    <Compile Include="JobScheduler.cs" />
     <Compile Include="PostedTime.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThreadsJob.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Model\MSDN.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MSDN.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\MSDN.edmx.diagram">
+      <DependentUpon>MSDN.edmx</DependentUpon>
     </None>
     <EntityDeploy Include="Model\WSWebTool.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -135,6 +181,19 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\MSDN.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MSDN.edmx</DependentUpon>
+      <LastGenOutput>MSDN.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\MSDN.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MSDN.edmx</DependentUpon>
+      <LastGenOutput>MSDN.cs</LastGenOutput>
+    </Content>
     <Content Include="Model\WSWebTool.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>WSWebTool.edmx</DependentUpon>
@@ -145,9 +204,6 @@
       <DependentUpon>WSWebTool.edmx</DependentUpon>
       <LastGenOutput>WSWebTool.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

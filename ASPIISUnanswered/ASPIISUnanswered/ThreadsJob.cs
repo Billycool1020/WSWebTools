@@ -16,9 +16,12 @@ namespace ASPIISUnanswered
             try
             {
                 var list = Unanswered.UnansweredThreads();
+                var list2 = MSDNUnanswered.MSDNUnansweredlist();
                 WSWebToolEntities db = new WSWebToolEntities();
+                db.Database.ExecuteSqlCommand("TRUNCATE TABLE [MSDNThreads]");
                 db.Database.ExecuteSqlCommand("TRUNCATE TABLE [ASPIISThreads]");
                 db.ASPIISThreads.AddRange(list);
+                db.MSDNThreads.AddRange(list2);
                 db.SaveChanges();
             }
             catch (Exception e)

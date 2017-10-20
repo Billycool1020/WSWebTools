@@ -160,6 +160,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UnansweredController.cs" />
+    <Compile Include="Logic\ASP.cs" />
+    <Compile Include="Logic\IIS.cs" />
     <Compile Include="Migrations\201710100546039_initial.cs" />
     <Compile Include="Migrations\201710100546039_initial.Designer.cs">
       <DependentUpon>201710100546039_initial.cs</DependentUpon>
@@ -170,7 +172,7 @@
     <Compile Include="Models\Engineer.cs" />
     <Compile Include="Models\EscalatedThread.cs" />
     <Compile Include="Models\FollowUpThread.cs" />
-    <Compile Include="Models\Forum.cs" />
+    <Compile Include="Models\MSDNForum.cs" />
     <Compile Include="Models\ForumMessage.cs">
       <DependentUpon>SHP.tt</DependentUpon>
     </Compile>
@@ -186,6 +188,7 @@
     <Compile Include="Models\ForumUser.cs">
       <DependentUpon>SHP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MSDNThread.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\SHP.Context.cs">
       <AutoGen>True</AutoGen>
@@ -305,6 +308,7 @@
     <Content Include="Views\Unanswered\Asp.cshtml" />
     <Content Include="Views\Unanswered\IIS.cshtml" />
     <Content Include="Views\Unanswered\Detail.cshtml" />
+    <Content Include="Views\Unanswered\Follow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

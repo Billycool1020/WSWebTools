@@ -6,7 +6,7 @@
     List<string> productlist = ViewBag.productlist;
 }
 
-<h2>MSDN</h2>
+<h2>Follow Up</h2>
 
 
 
@@ -20,76 +20,39 @@
 }
 
 
-@*<div class="container">
-    <ul class="nav nav-tabs">
-        @foreach (var product in productlist)
+
+
+
+@if (Model.Count > 0)
+{
+    <P>Today is @DateTime.Now.ToShortDateString() &nbsp; @ViewBag.CProduct &nbsp; Threads: @ViewBag.Threads &nbsp; Marked: @ViewBag.Marked &nbsp; @ViewBag.Need</P>
+
+    <table class="table">
+        <tr>
+            <th width="45%">
+                Title
+            </th>
+
+            <th width="9%">
+                Create Date
+            </th>
+            <th width="22%">
+                Product
+            </th>
+
+            <th width="18%">
+                Note
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
         {
-            <li><a data-toggle="tab" href="#@product" onclick="changeproduct(this)">@product</a></li>
-        }      
-    </ul>
-
-    <div class="tab-content">
-        @foreach (var product in productlist)
-        {
-          
-        }
-        <div id="home" class="tab-pane fade in active">
-            <h3>HOME</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        </div>
-        <div id="menu1" class="tab-pane fade">
-            <h3>Menu 1</h3>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
-        <div id="menu2" class="tab-pane fade">
-            <h3>Menu 2</h3>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-        </div>
-        <div id="menu3" class="tab-pane fade">
-            <h3>Menu 3</h3>
-            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </div>
-    </div>
-</div>*@
-
-
-
-
-
-
-
-
-
-
-
-
- Today is @DateTime.Now.ToShortDateString() &nbsp; @ViewBag.CProduct  &nbsp;Threads: @ViewBag.Threads   &nbsp;Marked: @ViewBag.Marked  &nbsp; @ViewBag.Need
-<table class="table">
-    <tr>
-        <th width="45%">
-            Title
-        </th>
-
-        <th width="9%">
-            Create Date
-        </th>
-        <th width="22%">
-            Product
-        </th>
-
-        <th width="18%">
-            Note
-        </th>
-        <th>
-
-        </th>
-        <th>
-
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
 
             <tr>
                 <td width="500px">
@@ -113,49 +76,58 @@
                 </td>
                 <td></td>
             </tr>
-        
-    }
-
-</table>
 
 
-            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        }
 
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, product = ViewBag.product }))
+    </table>
 
-            @section scripts {
-                <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-                <script src="~/Scripts/bootstrap-notify.min.js"></script>
-                <script>
+    <p>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-                    function addNote(x) {
-                        $(x).parent().find("textarea").attr("disabled", "disabled");
-                        var serviceURL = '/Unanswered/AddNote';
-                        var Note = $(x).parent().parent().find("textarea").val();
-                        var Id = $(x).attr('id');
-                        $.ajax({
-                            type: "POST",
-                            url: serviceURL,
-                            data: JSON.stringify({
-                                Note: Note,
-                                Id: Id
-                            }),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (response) {
-                                $(x).parent().find("textarea").removeAttr("disabled");
-                                note();
-                            },
-                        });
-                    }
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, product = ViewBag.product }))
+    </p>
+}
 
 
 
-                    function note() {
-                        $.notify({
-                            title: "<strong>Sucess:</strong> ",
-                            message: "The Note is updated"
-                        });
-                    }
-                </script>
-            }
+
+
+
+
+@section scripts {
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/bootstrap-notify.min.js"></script>
+    <script>
+
+        function addNote(x) {
+            $(x).parent().find("textarea").attr("disabled", "disabled");
+            var serviceURL = '/Unanswered/AddNote';
+            var Note = $(x).parent().parent().find("textarea").val();
+            var Id = $(x).attr('id');
+            $.ajax({
+                type: "POST",
+                url: serviceURL,
+                data: JSON.stringify({
+                    Note: Note,
+                    Id: Id
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $(x).parent().find("textarea").removeAttr("disabled");
+                    note();
+                },
+            });
+        }
+
+
+
+        function note() {
+            $.notify({
+                title: "<strong>Sucess:</strong> ",
+                message: "The Note is updated"
+            });
+        }
+    </script>
+}
