@@ -17,8 +17,7 @@ namespace WSWebTool.Logic
 
             var threads = from t in WSdb.ASPIISThreads
                           where t.ASPIISForum.Product.ProductName == "ASP.NET"
-                          orderby t.PostDate descending
-                          where t.IsLastOp == true
+                          orderby t.PostDate descending                          
                           select new UnansweredThreads
                           {
                               ThreadId = t.ThreadId,
@@ -64,8 +63,7 @@ namespace WSWebTool.Logic
 
             var threads = from t in WSdb.ASPIISThreads
                           where t.ASPIISForum.Product.ProductName == "ASP.NET"
-                          orderby t.PostDate descending
-                          where t.IsLastOp == true
+                          orderby t.PostDate descending                          
                           select new UnansweredThreads
                           {
                               ThreadId = t.ThreadId,
