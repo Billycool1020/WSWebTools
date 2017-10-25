@@ -176,7 +176,7 @@ namespace WSWebTool.Controllers
                             }
                         }
                     });
-                    list = list.Where(x => x.IsLastOp).OrderByDescending(x => x.CreateTime).ToList();
+                    list = list.OrderByDescending(x => x.CreateTime).ToList();
                 }
             }
 
