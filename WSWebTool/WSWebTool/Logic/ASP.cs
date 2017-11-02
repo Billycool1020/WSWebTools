@@ -46,13 +46,13 @@ namespace WSWebTool.Logic
                     }
                     else
                     {
-                        u.Note = "";
+                        u.Note = "0";
                     }
                 }
             });
-            var today = DateTime.Today;
-            var month = new DateTime(today.Year, today.Month, 1);
-            list = list.Where(x => x.IsLastOp && x.CreateTime >= month).OrderByDescending(l => l.CreateTime).ToList();
+            //var today = DateTime.Today;
+            //var month = new DateTime(today.Year, today.Month, 1);
+            //list = list.Where(x => x.IsLastOp && x.CreateTime >= month).OrderByDescending(l => l.CreateTime).ToList();
             return list;
         }
 
@@ -92,7 +92,7 @@ namespace WSWebTool.Logic
                     }
                     else
                     {
-                        u.Note = "";
+                        u.Note = "0";
                     }
                 }
             });

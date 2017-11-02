@@ -1,0 +1,14 @@
+c:\users\v-haowli\source\repos\ForumUsers\ForumUsers\bin\Debug\ForumUsers.exe.config
+c:\users\v-haowli\source\repos\ForumUsers\ForumUsers\bin\Debug\ForumUsers.exe
+c:\users\v-haowli\source\repos\ForumUsers\ForumUsers\bin\Debug\ForumUsers.pdb
+c:\users\v-haowli\source\repos\ForumUsers\ForumUsers\bin\Debug\EntityFramework.dll
+c:\users\v-haowli\source\repos\ForumUsers\ForumUsers\bin\Debug\EntityFramework.SqlServer.dll
+c:\users\v-haowli\source\repos\ForumUsers\ForumUsers\bin\Debug\HtmlAgilityPack.dll
+c:\users\v-haowli\source\repos\ForumUsers\ForumUsers\bin\Debug\EntityFramework.xml
+c:\users\v-haowli\source\repos\ForumUsers\ForumUsers\bin\Debug\EntityFramework.SqlServer.xml
+c:\users\v-haowli\source\repos\ForumUsers\ForumUsers\bin\Debug\HtmlAgilityPack.pdb
+c:\users\v-haowli\source\repos\ForumUsers\ForumUsers\bin\Debug\HtmlAgilityPack.xml
+c:\users\v-haowli\source\repos\ForumUsers\ForumUsers\obj\Debug\ForumUsers.csprojResolveAssemblyReference.cache
+c:\users\v-haowli\source\repos\ForumUsers\ForumUsers\obj\Debug\ForumUsers.csproj.CoreCompileInputs.cache
+c:\users\v-haowli\source\repos\ForumUsers\ForumUsers\obj\Debug\ForumUsers.exe
+c:\users\v-haowli\source\repos\ForumUsers\ForumUsers\obj\Debug\ForumUsers.pdb

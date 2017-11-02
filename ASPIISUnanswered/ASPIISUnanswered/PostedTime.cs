@@ -72,11 +72,11 @@ namespace ASPIISUnanswered
             return true;
         }
 
-        public bool LessThanOneMonth(string LastPostTime)
+        public bool LessThanTwoMonth(string LastPostTime)
         {
             DateTime Time = Caltime(LastPostTime);
             var today = DateTime.Today;
-            var month = new DateTime(today.Year, today.Month, 1);
+            var month = new DateTime(today.Year, today.Month-1, 1);
             if (Time>=month)
             {
                 return true;

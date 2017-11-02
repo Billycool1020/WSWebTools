@@ -21,7 +21,6 @@ namespace WSWebTool.Models
         public int ForumId { get; set; }        
         public bool IsLastOp { get; set; }
 
-
         public virtual ASPIISForum ASPIISForum { get; set; }
     }
 }

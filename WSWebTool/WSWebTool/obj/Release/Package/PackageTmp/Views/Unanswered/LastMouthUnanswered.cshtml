@@ -1,0 +1,137 @@
+﻿@model PagedList.IPagedList<WSWebTool.Models.UnansweredThreads>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "LastMouthUnanswered";
+    List<string> productlist = ViewBag.productlist;
+}
+
+<h2>Last Mouth Unanswered</h2>
+
+
+
+@using (Html.BeginForm("LastMouthUnanswered", "Unanswered", FormMethod.Get))
+{
+    <p>
+        Find by Product:
+        @Html.DropDownList("Product", new SelectList(productlist), "-- Click to Select --")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+
+
+
+
+@if (Model.Count > 0)
+{
+    <P>Today is @DateTime.Now.ToShortDateString() &nbsp; @ViewBag.CProduct &nbsp; Threads: @ViewBag.Threads &nbsp; Marked: @ViewBag.Marked &nbsp; @ViewBag.Need</P>
+
+    <table class="table">
+        <tr>
+            <th width="45%">
+                Title
+            </th>
+
+            <th width="9%">
+                Create Date
+            </th>
+            <th width="22%">
+                Product
+            </th>
+
+            <th width="18%">
+                Note
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td width="500px">
+                    <a href=@item.url target="_blank" style="overflow: hidden; text-overflow: ellipsis">@item.title</a>
+                </td>
+
+                <td>
+                    @item.CreateTime.ToShortDateString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product)
+                </td>
+
+                <td>
+                    @Html.DropDownListFor(modelItem => item.Note, new SelectList(ViewBag.Status, "id", "Status", @item.Note))
+
+                    @*@Html.TextAreaFor(modelItem => item.Note, new { @class = "form-control", @rows = 3, @cols = 20 })*@
+                    <input id="Hidden1" type="hidden" value="@item.ThreadId" />
+
+                </td>
+                <td style="text-align:center; vertical-align:middle;">
+                    <input id="@item.ThreadId" type="button" value="Update" class="form-control" onclick="addNote(this)" />
+                </td>
+                <td></td>
+            </tr>
+
+
+        }
+
+    </table>
+
+    <p>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("LastMouthUnanswered", new { page, product = ViewBag.product }))
+    </p>
+}
+
+
+
+
+
+
+
+@section scripts {
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/bootstrap-notify.min.js"></script>
+    <script>
+
+        function addNote(x) {
+            //$(x).parent().find("textarea").attr("disabled", "disabled");
+            var serviceURL = '/Unanswered/AddNote';
+            var Note = $(x).parent().parent().find("select").val();
+            var Id = $(x).attr('id');
+            var product="@ViewBag.product";
+            $.ajax({
+                type: "POST",
+                url: serviceURL,
+                data: JSON.stringify({
+                    Note: Note,
+                    Id: Id,
+                    Product: product
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $(x).parent().find("textarea").removeAttr("disabled");
+                    note();
+                },
+            });
+        }
+
+
+
+        function note() {
+            $.notify({
+                title: "<strong>Sucess:</strong> ",
+                message: "The Note is updated"
+            });
+        }
+    </script>
+}

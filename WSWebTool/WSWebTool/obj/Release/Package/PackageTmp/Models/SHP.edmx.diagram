@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7f2607f64563475d87230409c862a2c1" Name="Diagram1" ZoomLevel="78">
+      <Diagram DiagramId="7f2607f64563475d87230409c862a2c1" Name="Diagram1" ZoomLevel="102">
         <EntityTypeShape EntityType="shp.message_msdnModel.ForumMessageKeyword" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="shp.message_msdnModel.ForumMessageLexi" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="shp.message_msdnModel.ForumMessage" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />

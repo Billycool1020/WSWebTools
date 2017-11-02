@@ -30,23 +30,6 @@ namespace WSWebTool.Logic
            
             var list = threads.ToList();
 
-
-
-            //foreach (var u in list)
-            ////Parallel.ForEach(list, (u) =>
-            //{
-            //    var Note = WSdb.ThreadNotes.Find(u.ThreadId);
-            //    if (Note != null)
-            //    {
-            //        u.Note = Note.Note;
-            //    }
-            //    else
-            //    {
-            //        u.Note = "";
-            //    }
-            //};
-
-
             Parallel.ForEach(list, (u) =>
             {
                 var date = (DateTime.Now - u.CreateTime);
@@ -62,15 +45,13 @@ namespace WSWebTool.Logic
                     }
                     else
                     {
-                        u.Note = "";
+                        u.Note = "0";
                     }
                 }
             });
             
 
-            var today = DateTime.Today;
-            var month = new DateTime(today.Year, today.Month, 1);
-            list = list.Where(x => x.IsLastOp && x.CreateTime >= month).ToList();
+          
             return list;
         }
 
@@ -127,7 +108,7 @@ namespace WSWebTool.Logic
                     }
                     else
                     {
-                        u.Note = "";
+                        u.Note = "0";
                     }
                 }
             });

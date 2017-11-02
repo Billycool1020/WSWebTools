@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="shpmessage_msdnModelStoreContainer" CdmEntityContainer="SHPEntities">
+    <EntitySetMapping Name="ForumMessageKeywords">
+      <EntityTypeMapping TypeName="shp.message_msdnModel.ForumMessageKeyword">
+        <MappingFragment StoreEntitySet="ForumMessageKeywords">
+          <ScalarProperty Name="ForumMessageId" ColumnName="ForumMessageId" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Keyword" ColumnName="Keyword" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ForumMessageLexis">
+      <EntityTypeMapping TypeName="shp.message_msdnModel.ForumMessageLexi">
+        <MappingFragment StoreEntitySet="ForumMessageLexis">
+          <ScalarProperty Name="ForumMessageId" ColumnName="ForumMessageId" />
+          <ScalarProperty Name="SentenceIndex" ColumnName="SentenceIndex" />
+          <ScalarProperty Name="WordIndex" ColumnName="WordIndex" />
+          <ScalarProperty Name="ParentWordIndex" ColumnName="ParentWordIndex" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="NER" ColumnName="NER" />
+          <ScalarProperty Name="Word" ColumnName="Word" />
+          <ScalarProperty Name="LongWord" ColumnName="LongWord" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ForumMessages">
+      <EntityTypeMapping TypeName="shp.message_msdnModel.ForumMessage">
+        <MappingFragment StoreEntitySet="ForumMessages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+          <ScalarProperty Name="PostMessageId" ColumnName="PostMessageId" />
+          <ScalarProperty Name="AnalysisCompleted" ColumnName="AnalysisCompleted" />
+          <ScalarProperty Name="AnalysisProgress" ColumnName="AnalysisProgress" />
+          <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+          <ScalarProperty Name="ReplyCount" ColumnName="ReplyCount" />
+          <ScalarProperty Name="IsAnswered" ColumnName="IsAnswered" />
+          <ScalarProperty Name="Score" ColumnName="Score" />
+          <ScalarProperty Name="FavoriteCount" ColumnName="FavoriteCount" />
+          <ScalarProperty Name="UpVoteCount" ColumnName="UpVoteCount" />
+          <ScalarProperty Name="DownVoteCount" ColumnName="DownVoteCount" />
+          <ScalarProperty Name="DeleteVoteCount" ColumnName="DeleteVoteCount" />
+          <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+          <ScalarProperty Name="CreatedTimeOfHourly" ColumnName="CreatedTimeOfHourly" />
+          <ScalarProperty Name="CreatedTimeOfDaily" ColumnName="CreatedTimeOfDaily" />
+          <ScalarProperty Name="LastUpdatedTime" ColumnName="LastUpdatedTime" />
+          <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="LCID" ColumnName="LCID" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ForumMessageTags">
+      <EntityTypeMapping TypeName="shp.message_msdnModel.ForumMessageTag">
+        <MappingFragment StoreEntitySet="ForumMessageTags">
+          <ScalarProperty Name="ForumMessageId" ColumnName="ForumMessageId" />
+          <ScalarProperty Name="Tag" ColumnName="Tag" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ForumUsers">
+      <EntityTypeMapping TypeName="shp.message_msdnModel.ForumUser">
+        <MappingFragment StoreEntitySet="ForumUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Region" ColumnName="Region" />
+          <ScalarProperty Name="ProfilePictureUri" ColumnName="ProfilePictureUri" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

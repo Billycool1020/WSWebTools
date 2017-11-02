@@ -11,8 +11,8 @@ namespace WSWebTool.Models
     {
         [Key]
         public string ThreadID { get; set; }
-        [AllowHtml]
         public string Note { get; set; }
+        public string Product { get; set; }
 
        
     }

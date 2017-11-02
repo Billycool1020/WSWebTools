@@ -109,7 +109,7 @@ namespace ASPIISUnanswered
 
                         string LastPostTime = anchor.ParentNode.NextSibling.NextSibling.ChildNodes[4].InnerText;
                         LastPostTime = LastPostTime.Remove(0, 1);
-                        if (pt.LessThanOneMonth(LastPostTime))
+                        if (pt.LessThanTwoMonth(LastPostTime))
                         {
                             Regex r = new Regex(@"/t/\d{7}");
                             var ThreadId = r.Match(anchor.Attributes["href"].Value).Value;
@@ -243,7 +243,7 @@ namespace ASPIISUnanswered
 
                         string LastPostTime = anchor.ParentNode.NextSibling.NextSibling.ChildNodes[4].InnerText;
                         LastPostTime = LastPostTime.Remove(0, 1);
-                        if (pt.LessThanOneMonth(LastPostTime))
+                        if (pt.LessThanTwoMonth(LastPostTime))
                         {
                             Regex r = new Regex(@"/t/\d{7}");
                             var ThreadId = r.Match(anchor.Attributes["href"].Value).Value;

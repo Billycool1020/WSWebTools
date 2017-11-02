@@ -172,6 +172,8 @@
     <Compile Include="Models\Engineer.cs" />
     <Compile Include="Models\EscalatedThread.cs" />
     <Compile Include="Models\FollowUpThread.cs" />
+    <Compile Include="Models\ForumMember.cs" />
+    <Compile Include="Models\ForumMemberActuvity.cs" />
     <Compile Include="Models\MSDNForum.cs" />
     <Compile Include="Models\ForumMessage.cs">
       <DependentUpon>SHP.tt</DependentUpon>
@@ -211,6 +213,7 @@
     </Compile>
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\ThreadNote.cs" />
+    <Compile Include="Models\ThreadStatus.cs" />
     <Compile Include="Models\UnansweredThreads.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -305,10 +308,11 @@
     <Content Include="Views\Unanswered\Index.cshtml" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
-    <Content Include="Views\Unanswered\Asp.cshtml" />
-    <Content Include="Views\Unanswered\IIS.cshtml" />
+    <Content Include="Views\Unanswered\LastMouthFollow.cshtml" />
+    <Content Include="Views\Unanswered\LastMouthUnanswered.cshtml" />
     <Content Include="Views\Unanswered\Detail.cshtml" />
     <Content Include="Views\Unanswered\Follow.cshtml" />
+    <Content Include="Views\Shared\NoteList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

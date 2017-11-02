@@ -27,7 +27,7 @@ namespace ASPIISUnanswered
             List<MSDNThread> errorlist = new List<MSDNThread>();
             List<MSDNThread> deletelist = new List<MSDNThread>();
             var today = DateTime.Today;
-            var month = new DateTime(today.Year, today.Month, 1);
+            var month = new DateTime(today.Year, today.Month-1, 1);
 
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             TimeSpan diff = month.ToUniversalTime() - origin;

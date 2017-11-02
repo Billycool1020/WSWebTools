@@ -67,7 +67,9 @@
                 </td>
 
                 <td>
-                    @Html.TextAreaFor(modelItem => item.Note, new { @class = "form-control", @rows = 3, @cols = 20 })
+                    @Html.DropDownListFor(modelItem => item.Note, new SelectList(ViewBag.Status,"id", "Status", @item.Note) )
+
+                    @*@Html.TextAreaFor(modelItem => item.Note, new { @class = "form-control", @rows = 3, @cols = 20 })*@
                     <input id="Hidden1" type="hidden" value="@item.ThreadId" />
 
                 </td>
@@ -101,16 +103,18 @@
     <script>
 
         function addNote(x) {
-            $(x).parent().find("textarea").attr("disabled", "disabled");
+            //$(x).parent().find("textarea").attr("disabled", "disabled");
             var serviceURL = '/Unanswered/AddNote';
-            var Note = $(x).parent().parent().find("textarea").val();
+            var Note = $(x).parent().parent().find("select").val();
             var Id = $(x).attr('id');
+            var product="@ViewBag.product";
             $.ajax({
                 type: "POST",
                 url: serviceURL,
                 data: JSON.stringify({
                     Note: Note,
-                    Id: Id
+                    Id: Id,
+                    Product: product
                 }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
