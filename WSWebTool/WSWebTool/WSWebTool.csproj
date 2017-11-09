@@ -173,7 +173,7 @@
     <Compile Include="Models\EscalatedThread.cs" />
     <Compile Include="Models\FollowUpThread.cs" />
     <Compile Include="Models\ForumMember.cs" />
-    <Compile Include="Models\ForumMemberActuvity.cs" />
+    <Compile Include="Models\ForumMemberActivity.cs" />
     <Compile Include="Models\MSDNForum.cs" />
     <Compile Include="Models\ForumMessage.cs">
       <DependentUpon>SHP.tt</DependentUpon>

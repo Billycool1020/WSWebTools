@@ -25,7 +25,7 @@ namespace WSWebTool.Data
         public virtual DbSet<MSDNThread> MSDNThreads { get; set; }
         public virtual DbSet<ThreadStatus> ThreadStatus { get; set; }
         public virtual DbSet<ForumMember> ForumMembers { get; set; }
-        public virtual DbSet<ForumMemberActuvity> ForumMemberActuvities { get; set; }
+        public virtual DbSet<ForumMemberActivity> ForumMemberActuvities { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Team>()

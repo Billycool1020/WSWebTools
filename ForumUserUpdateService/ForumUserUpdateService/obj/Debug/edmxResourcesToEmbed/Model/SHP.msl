@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="shpmessage_msdnModelStoreContainer" CdmEntityContainer="SHPEntities">
+    <EntitySetMapping Name="ForumUsers">
+      <EntityTypeMapping TypeName="shp.message_msdnModel.ForumUser">
+        <MappingFragment StoreEntitySet="ForumUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Region" ColumnName="Region" />
+          <ScalarProperty Name="ProfilePictureUri" ColumnName="ProfilePictureUri" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -199,9 +199,6 @@ namespace WSWebTool.Controllers
 
         }
 
-
-
-
         public ActionResult Follow(string product, int? page)
         {
             var today = DateTime.Today;
@@ -370,7 +367,7 @@ namespace WSWebTool.Controllers
             }
             var today = DateTime.Today;
             var month = new DateTime(today.Year, today.Month, 1);
-            list = list.Where(x => x.CreateTime >= month).ToList();
+            list = list.Where(x => x.CreateTime >= month).OrderByDescending(x => x.CreateTime).ToList();
 
             int pageSize = 25;
             int pageNumber = (page ?? 1);
