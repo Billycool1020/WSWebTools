@@ -13,8 +13,6 @@ namespace ForumUserUpdateService
     {
         static void Main(string[] args)
         {
-           
-
             HostFactory.Run(x =>
             {
                 x.Service<JobScheduler>(s =>
@@ -30,7 +28,6 @@ namespace ForumUserUpdateService
                 x.RunAsLocalSystem();
                 x.StartAutomatically();
             });
-
 
         }
     }

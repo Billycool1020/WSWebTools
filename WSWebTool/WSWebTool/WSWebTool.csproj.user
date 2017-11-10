@@ -18,6 +18,8 @@
     <WebStackScaffolding_ViewDialogWidth>600</WebStackScaffolding_ViewDialogWidth>
     <NameOfLastUsedPublishProfile>CustomProfile</NameOfLastUsedPublishProfile>
     <WebStackScaffolding_DbContextTypeFullName>WSWebTool.Data.WSWebContext</WebStackScaffolding_DbContextTypeFullName>
+    <Controller_SelectedScaffolderID>MvcControllerEmptyScaffolder</Controller_SelectedScaffolderID>
+    <Controller_SelectedScaffolderCategoryPath>root/Controller</Controller_SelectedScaffolderCategoryPath>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

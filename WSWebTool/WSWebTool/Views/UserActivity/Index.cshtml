@@ -1,0 +1,75 @@
+﻿@model List<WSWebTool.DTO.ActivityReport>
+
+<h2>Month Report </h2>
+
+
+<h3>Member Since</h3>
+<table border="1">
+     <tr>
+         <td width="100px"> </td>
+        <td width="100px">Member Since</td>
+    </tr>
+    @foreach (var m in Model)
+    {
+    <tr>
+        <td width="100px">@m.Month</td>
+        <td width="100px">@m.MemberCount</td>
+         </tr>
+        }
+
+</table>
+<h3>MSDN</h3>
+<table border="1">
+    <tr>
+        <td width="100px"> </td>
+        <td width="100px">Monthly Activities</td>
+    </tr>
+    @foreach (var m in Model)
+    {
+        <tr>
+            <td width="100px">@m.Month</td>
+            <td width="100px">@m.MSDN</td>
+        </tr>
+    }
+
+</table>
+
+
+<h3>TN</h3>
+<table border="1">
+    <tr>
+        <td width="50px"> </td>
+        <td width="100px">Monthly Activities</td>
+    </tr>
+    @foreach (var m in Model)
+    {
+        <tr>
+            <td width="100px">@m.Month</td>
+            <td width="100px">@m.TN</td>
+        </tr>
+    }
+
+</table>
+
+
+
+@section scripts {
+<script>
+    $("table").each(function () {
+        var $this = $(this);
+        var newrows = [];
+        $this.find("tr").each(function () {
+            var i = 0;
+            $(this).find("td").each(function () {
+                i++;
+                if (newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
+                newrows[i].append($(this));
+            });
+        });
+        $this.find("tr").remove();
+        $.each(newrows, function () {
+            $this.append(this);
+        });
+    });
+</script>
+    }

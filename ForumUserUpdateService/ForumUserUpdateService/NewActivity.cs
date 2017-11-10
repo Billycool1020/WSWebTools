@@ -23,20 +23,21 @@ namespace ForumUserUpdateService
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             List<ForumMemberActivity> ActivityList = new List<ForumMemberActivity>();
             List<ForumMember> MemberList = new List<ForumMember>();
-
+            ParallelOptions po = new ParallelOptions();
+            po.MaxDegreeOfParallelism = 4;
 
             for (var j = 0; j <= times + 1; j++)
             {
                 var User = AllUser.Skip(j * vol).Take(vol).ToList();
-                Parallel.ForEach(User, (u) =>
+                Parallel.ForEach(User, po,(u) =>
                 {
                     try
                     {
                         HtmlWeb web = new HtmlWeb();
                         HtmlDocument document = web.Load(Url1 + u.Name + Url2);
                         HtmlNode[] nodes = document.DocumentNode.SelectNodes("//div[@data-application-name='Forums']").ToArray();
-
-                        Parallel.ForEach(nodes, (item) =>
+                        
+                        Parallel.ForEach(nodes,po, (item) =>
                         {
                             try
                             {
@@ -93,13 +94,14 @@ namespace ForumUserUpdateService
             var yesterday = DateTime.Today.AddDays(-1);
             var ForumMemberActivitiesList = WS.ForumMemberActivities.Where(x => x.Time > yesterday).ToList();
             List<ForumMemberActivity> ActivityList2 = new List<ForumMemberActivity>();
-            Parallel.ForEach(ActivityList, (l) =>
+            foreach(var l in ActivityList)
+            //Parallel.ForEach(ActivityList, (l) =>
             {
                 if (ForumMemberActivitiesList.Where(x => x.ForumMemberId == l.ForumMemberId && x.Time == l.Time).Count() == 0)
                 {
                     ActivityList2.Add(l);
                 }
-            });
+            }//);
             WS.ForumMemberActivities.AddRange(ActivityList2);
             WS.SaveChanges();
         }
