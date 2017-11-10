@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPS", "EPS\EPS.csproj", "{B77A67DB-EB70-4E7F-9486-BDDB73817C14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B77A67DB-EB70-4E7F-9486-BDDB73817C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B77A67DB-EB70-4E7F-9486-BDDB73817C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B77A67DB-EB70-4E7F-9486-BDDB73817C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B77A67DB-EB70-4E7F-9486-BDDB73817C14}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {096969CB-D843-41A5-BA7C-060FCB45C505}
+	EndGlobalSection
+EndGlobal
