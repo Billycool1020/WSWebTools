@@ -6,7 +6,20 @@
     <title>@ViewBag.Title - WSWebTool</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>  
+        $(function () {
+            for (var i = 1; i <= 3; i++) {
+                $('#DropUrl'+i).change(function () {
+                    var url = $(this).val();
+                    if (url != null && url != '') {
+                        window.location.href = url;
+                    }
+                });
+            }
+        });
 
+    </script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -19,11 +32,43 @@
                 </button>
                 @Html.ActionLink("WSWebTool", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+            <div class="navbar-collapse collapse"> 
+                <br />
                 <ul class="nav navbar-nav">
+                    <!--old version-->
+                    @*<li>@Html.ActionLink("Follow", "Follow", "Unanswered")</li>
                     <li>@Html.ActionLink("Unanswered", "Index", "Unanswered")</li>
                     <li>@Html.ActionLink("Last Mouth Follow", "LastMouthFollow", "Unanswered")</li>
                     <li>@Html.ActionLink("Last Mouth Unanswered", "LastMouthUnanswered", "Unanswered")</li>
                     <li>@Html.ActionLink("Monthly Report", "Index", "UserActivity")</li>
+                    <li>@Html.ActionLink("Daily Report", "DailyReport", "UserActivity")</li>*@
+
+                    <!--add to dropdownlist-->
+                    <li>
+                        @Html.DropDownList("DropUrl1",
+             new SelectList(new[]
+    {
+        new SelectListItem { Text = "Follow", Value = Url.Action("Follow", "Unanswered") },
+        new SelectListItem { Text = "Unanswered", Value = Url.Action("Index", "Unanswered") }
+    }, "Value", "Text"), "-- Follow and Unanswered ---")
+                    </li>
+                    <li>
+                        @Html.DropDownList("DropUrl2",
+             new SelectList(new[]
+    {
+        new SelectListItem { Text = "Last Mouth Follow", Value = Url.Action("LastMouthFollow", "Unanswered") },
+        new SelectListItem { Text = "Last Mouth Unanswered", Value = Url.Action("LastMouthUnanswered", "Unanswered") }
+    }, "Value", "Text"), "--Last Month Follow and Unanswered ---")
+                    </li>
+                    <li>
+                        @Html.DropDownList("DropUrl3",
+             new SelectList(new[]
+    {
+        new SelectListItem { Text = "Monthly Report", Value = Url.Action("Index", "UserActivity") },
+        new SelectListItem { Text = "Daily Report", Value = Url.Action("DailyReport", "UserActivity") }
+    }, "Value", "Text"), "--Monthly and Daily Report ---")
+                    </li>
+</ul>
                 <p class="nav navbar-text navbar-right">Hello, @User.Identity.Name!</p>
             </div>
         </div>
