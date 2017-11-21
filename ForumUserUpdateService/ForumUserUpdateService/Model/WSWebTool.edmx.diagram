@@ -11,14 +11,14 @@
         <EntityTypeShape EntityType="WSWebToolModel.Engineer" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="WSWebToolModel.EscalatedThread" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WSWebToolModel.FollowUpThread" Width="1.5" PointX="7.5" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="WSWebToolModel.ForumMember" Width="1.5" PointX="1.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSWebToolModel.ForumMember" Width="1.5" PointX="1.25" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="WSWebToolModel.MSDNForum" Width="1.5" PointX="7.5" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="WSWebToolModel.MSDNThread" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WSWebToolModel.Product" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="WSWebToolModel.sysdiagram" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WSWebToolModel.Team" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="WSWebToolModel.ThreadNote" Width="1.5" PointX="9.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WSWebToolModel.ThreadStatu" Width="1.5" PointX="5.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSWebToolModel.ThreadStatu" Width="1.5" PointX="9.375" PointY="10.625" IsExpanded="true" />
         <AssociationConnector Association="WSWebToolModel.FK_dbo_ASPIISForums_dbo_Products_ProductId" ManuallyRouted="false" />
         <AssociationConnector Association="WSWebToolModel.FK_dbo_ASPIISThreads_dbo_ASPIISForums_forumId" ManuallyRouted="false" />
         <AssociationConnector Association="WSWebToolModel.FK_dbo_Engineers_dbo_Teams_SubTeamId" ManuallyRouted="false" />
@@ -26,7 +26,7 @@
         <AssociationConnector Association="WSWebToolModel.FK_dbo_FollowUpThreads_dbo_Products_ProductId" ManuallyRouted="false" />
         <AssociationConnector Association="WSWebToolModel.FK_dbo_Forums_dbo_Products_ProductId" ManuallyRouted="false" />
         <AssociationConnector Association="WSWebToolModel.FK_dbo_Products_dbo_Teams_SubTeamId" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="WSWebToolModel.ForumMemberActivity" Width="1.5" PointX="3" PointY="13.125" />
+        <EntityTypeShape EntityType="WSWebToolModel.ForumMemberActivity" Width="2" PointX="4.125" PointY="9.25" />
         <AssociationConnector Association="WSWebToolModel.FK_dbo_ForumMemberActuvities_dbo_ForumMembers_ForumMemberId1" />
       </Diagram>
     </edmx:Diagrams>

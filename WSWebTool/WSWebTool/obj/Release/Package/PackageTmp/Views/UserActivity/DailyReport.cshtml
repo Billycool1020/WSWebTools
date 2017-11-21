@@ -8,26 +8,46 @@
 <h2>Daily Report </h2>
 
 
-<h3>Forum</h3>
+@*<h3>Forum</h3>*@
 <hr />
 <table border="1">
-    <tr>
-        <td>Date</td><td>Product</td><td>Ask</td><td>Reply</td><td>Mark</td><td>Vote</td><td colspan="2">Total</td>
-    </tr>
+   @* <tr>
+         <td>Date</td><td>Product</td><td>Ask</td><td>Reply</td><td>Mark</td><td>Vote</td><td colspan="2">Total</td>
+     </tr>
     @foreach(var p in Model)
+     {
+         <tr>
+             <td rowspan="2">@p.date.ToShortDateString()</td><td>MSDN</td><td>@p.MAsk</td><td>@p.MReply</td><td>@p.MMark</td><td>@p.MVote</td><td>@p.MTotal</td><td rowspan="2">@p.Total</td>
+         </tr>
+         <tr>
+
+             <td>TN</td>
+             <td>@p.TAsk</td>
+             <td>@p.TReply</td>
+             <td>@p.TMark</td>
+             <td>@p.TVote</td>
+             <td>@p.TTotal</td>
+
+         </tr>
+     }*@
+
+    <tr>
+        <td>Date</td>        
+        <td>Ask</td>
+        <td>Reply</td>
+        <td>Mark</td>       
+    </tr>
+    @foreach (var p in Model)
     {
         <tr>
-            <td rowspan="2">@p.date.ToShortDateString()</td><td>MSDN</td><td>@p.MAsk</td><td>@p.MReply</td><td>@p.MMark</td><td>@p.MVote</td><td>@p.MTotal</td><td rowspan="2">@p.Total</td>
-        </tr>
-        <tr>
+            <td >@p.date.ToShortDateString()</td>
             
-            <td>TN</td>
-            <td>@p.TAsk</td>
-            <td>@p.TReply</td>
-            <td>@p.TMark</td>
-            <td>@p.TVote</td>
-            <td>@p.TTotal</td>
+            <td>@p.MAsk</td>
+            <td>@p.MReply</td>
+            <td>@p.MMark</td>
            
+          
         </tr>
+      
     }
 </table>
