@@ -26,7 +26,7 @@ namespace EPS.Models
         public string Product { get; set; }
 
         public virtual ICollection<Experience> Experiences { get; set; }
-        public virtual ICollection<Skill> Skills { get; set; }
+
 
 
     }

@@ -12,7 +12,5 @@ namespace EPS.Models
         public string Type { get; set; }
         public string Level { get; set; }
         public int ParentID { get; set; }
-
-        public ICollection<Employee> Employees { get; set; }
     }
 }
