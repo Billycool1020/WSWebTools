@@ -19,11 +19,15 @@
                 </button>
                 @Html.ActionLink("WSWebTool", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+            <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Follow", "Follow", "Unanswered")</li>
                     <li>@Html.ActionLink("Unanswered", "Index", "Unanswered")</li>
                     <li>@Html.ActionLink("Last Mouth Follow", "LastMouthFollow", "Unanswered")</li>
                     <li>@Html.ActionLink("Last Mouth Unanswered", "LastMouthUnanswered", "Unanswered")</li>
                     <li>@Html.ActionLink("Monthly Report", "Index", "UserActivity")</li>
+                    <li>@Html.ActionLink("Daily Report", "DailyReport", "UserActivity")</li>
+                </ul>
                 <p class="nav navbar-text navbar-right">Hello, @User.Identity.Name!</p>
             </div>
         </div>
