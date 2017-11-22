@@ -20,10 +20,35 @@
                 @Html.ActionLink("WSWebTool", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Unanswered", "Index", "Unanswered")</li>
-                    <li>@Html.ActionLink("Last Mouth Follow", "LastMouthFollow", "Unanswered")</li>
-                    <li>@Html.ActionLink("Last Mouth Unanswered", "LastMouthUnanswered", "Unanswered")</li>
-                    <li>@Html.ActionLink("Monthly Report", "Index", "UserActivity")</li>
+                     <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                           <span style="color:white">Follow and Unanswered</span><b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu list-group">
+                            <li class="list-group-item">@Html.ActionLink("Last Mouth Follow", "LastMouthFollow", "Unanswered")</li>
+                            <li class="list-group-item">@Html.ActionLink("Last Mouth Unanswered", "LastMouthUnanswered", "Unanswered")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span style="color:white">Last Month Follow and Unanswered</span><b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu list-group">
+                            <li class="list-group-item">@Html.ActionLink("Monthly Report", "Index", "UserActivity")</li>
+                            <li class="list-group-item">@Html.ActionLink("Daily Report", "DailyReport", "UserActivity")</li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span style="color:white">Monthly and Daily Report</span><b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu list-group">
+                            <li class="list-group-item">@Html.ActionLink("Follow", "Follow", "Unanswered")</li>
+                            <li class="list-group-item">@Html.ActionLink("Unanswered", "Index", "Unanswered")</li>
+                        </ul>
+                    </li>
+            </ul>
                 <p class="nav navbar-text navbar-right">Hello, @User.Identity.Name!</p>
             </div>
         </div>
