@@ -44,7 +44,7 @@
                 Note
             </th>
             <th>
-
+                <input id="UpdateAll" type="button" value="Update All" class="form-control" onclick="addallNote()" />
             </th>
             <th>
 
@@ -72,7 +72,7 @@
 
                 </td>
                 <td style="text-align:center; vertical-align:middle;">
-                    <input id="@item.ThreadId" type="button" value="Update" class="form-control" onclick="addNote(this)" />
+                    <input id="@item.ThreadId" type="button" value="Update" class="form-control update" onclick="addNote(this)" />
                 </td>
                 <td></td>
             </tr>
@@ -101,11 +101,10 @@
     <script>
 
         function addNote(x) {
-            //$(x).parent().find("textarea").attr("disabled", "disabled");
             var serviceURL = '/Unanswered/AddNote';
             var Note = $(x).parent().parent().find("select").val();
             var Id = $(x).attr('id');
-            var product="@ViewBag.product";
+            var product ="@ViewBag.product";
             $.ajax({
                 type: "POST",
                 url: serviceURL,
@@ -122,6 +121,35 @@
                 },
             });
         }
+
+        function addNote2(x) {
+            var serviceURL = '/Unanswered/AddNote';
+            var Note = $(x).parent().parent().find("select").val();
+            var Id = $(x).attr('id');
+            var product ="@ViewBag.product";
+            $.ajax({
+                type: "POST",
+                url: serviceURL,
+                data: JSON.stringify({
+                    Note: Note,
+                    Id: Id,
+                    Product: product
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $(x).parent().find("textarea").removeAttr("disabled");                    
+                },                
+            });
+        }
+
+        function addallNote() {
+            $(".update").each(function (index, value) {
+                addNote2(value);
+            })
+            note();
+        }
+
 
 
 

@@ -44,7 +44,7 @@
                 Note
             </th>
             <th>
-
+                <input id="UpdateAll" type="button" value="Update All" class="form-control" onclick="addallNote()" />
             </th>
             <th>
 
@@ -107,7 +107,7 @@
             var serviceURL = '/Unanswered/AddNote';
             var Note = $(x).parent().parent().find("select").val();
             var Id = $(x).attr('id');
-            var product="@ViewBag.product";
+            var product ="@ViewBag.product";
             $.ajax({
                 type: "POST",
                 url: serviceURL,
@@ -125,6 +125,33 @@
             });
         }
 
+         function addNote2(x) {
+            var serviceURL = '/Unanswered/AddNote';
+            var Note = $(x).parent().parent().find("select").val();
+            var Id = $(x).attr('id');
+            var product ="@ViewBag.product";
+            $.ajax({
+                type: "POST",
+                url: serviceURL,
+                data: JSON.stringify({
+                    Note: Note,
+                    Id: Id,
+                    Product: product
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $(x).parent().find("textarea").removeAttr("disabled");
+                },
+            });
+        }
+
+        function addallNote() {
+            $(".update").each(function (index, value) {
+                addNote2(value);
+            })
+            note();
+        }
 
 
         function note() {

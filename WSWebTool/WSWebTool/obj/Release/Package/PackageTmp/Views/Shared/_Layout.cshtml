@@ -28,7 +28,7 @@
                     <li>@Html.ActionLink("Monthly Report", "Index", "UserActivity")</li>
                     <li>@Html.ActionLink("Daily Report", "DailyReport", "UserActivity")</li>
                 </ul>
-                <p class="nav navbar-text navbar-right">Hello, @User.Identity.Name!</p>
+                <p class="nav navbar-text navbar-right">Hello, @User.Identity.Name.Split('\\')[1]!</p>
             </div>
         </div>
     </div>
